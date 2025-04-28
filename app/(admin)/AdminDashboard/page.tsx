@@ -5,11 +5,11 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged, updateProfile, User } from "firebase/auth";
-import { app } from "@/lib/firebase/firebase";
+import { app } from "@/lib/firebase";
 import { getDatabase, ref, push } from "firebase/database";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/app/components/ui/input";
+import { Button } from "@/app/components/ui/button";
+import { Textarea } from "@/app/components/ui/textarea";
 import { ToastContainer, toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 
