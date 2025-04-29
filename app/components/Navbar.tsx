@@ -1,34 +1,74 @@
 "use client";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/app/components/ui/resizable-navbar";
+import { useState } from "react";
 
-import React, { useState } from "react";
-import { Menu, MenuItem } from "@/app/components/ui/navbar-menu";
-import { cn } from "@/lib/utils";
+export function HomeNavbar() {
+  const navItems = [
+    {
+      name: "Home",
+      link: "#features",
+    },
+    {
+      name: "About",
+      link: "#pricing",
+    },
+    {
+      name: "Contact",
+      link: "#contact",
+    },
+  ];
 
-export function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className="relative w-screen flex items-center justify-center">
-      <NavbarDemo />
-    </div>
-  );
-}
+    <div className="relative w-full">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody className="hidden lg:flex h-16 bg-[#0f172a]/90 text-gray-100 items-center justify-between px-4">
 
-function NavbarDemo({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
+          <NavbarLogo />
+          <NavItems
+            items={navItems}
+            className="absolute inset-0 h-full w-full rounded-full bg-[#0f172a]/90 text-gray-100"
+          />
+        </NavBody>
 
-  return (
-    <div
-      className={cn(
-        "fixed top-4 md:top-6 inset-x-0 flex justify-center z-50",
-        className
-      )}
-    >
-      <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Home" />
-        <MenuItem setActive={setActive} active={active} item="Services" />
-        <MenuItem setActive={setActive} active={active} item="Products" />
-        <MenuItem setActive={setActive} active={active} item="Pricing" />
-        <MenuItem setActive={setActive} active={active} item="Contact" />
-      </Menu>
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader className="h-16 bg-[#0f172a]/90 text-gray-100 flex items-center justify-between px-4 lg:hidden">
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-200 hover:text-white"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
     </div>
   );
 }
