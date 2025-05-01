@@ -11,20 +11,21 @@ import {
 } from "@/app/components/ui/resizable-navbar";
 import { useState } from "react";
 
-export function HomeNavbar() {
+interface HomeNavbarProps {
+  scrollToHome: () => void;
+  scrollToProduct: () => void;
+  scrollToContact: () => void;
+}
+
+export function HomeNavbar({
+  scrollToHome,
+  scrollToProduct,
+  scrollToContact,
+}: HomeNavbarProps) {
   const navItems = [
-    {
-      name: "Home",
-      link: "#features",
-    },
-    {
-      name: "About",
-      link: "#pricing",
-    },
-    {
-      name: "Contact",
-      link: "#contact",
-    },
+    { name: "Home", link: "#home", action: scrollToHome },
+    { name: "Product", link: "#product", action: scrollToProduct },
+    { name: "Contact", link: "#contact", action: scrollToContact },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -34,10 +35,13 @@ export function HomeNavbar() {
       <Navbar>
         {/* Desktop Navigation */}
         <NavBody className="hidden lg:flex h-16 bg-[#0f172a]/90 text-gray-100 items-center justify-between px-4">
-
           <NavbarLogo />
           <NavItems
-            items={navItems}
+            items={navItems.map((item) => ({
+              name: item.name,
+              link: item.link,
+              onClick: () => item.action()
+            }))}
             className="absolute inset-0 h-full w-full rounded-full bg-[#0f172a]/90 text-gray-100"
           />
         </NavBody>
@@ -57,14 +61,15 @@ export function HomeNavbar() {
             onClose={() => setIsMobileMenuOpen(false)}
           >
             {navItems.map((item, idx) => (
-              <a
+              <button
                 key={`mobile-link-${idx}`}
-                href={item.link}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="relative text-neutral-200 hover:text-white"
+                onClick={() => {
+                  item.action();
+                }}
+                className="relative text-left w-full px-4 py-2 text-neutral-200 hover:text-white"
               >
                 <span className="block">{item.name}</span>
-              </a>
+              </button>
             ))}
           </MobileNavMenu>
         </MobileNav>

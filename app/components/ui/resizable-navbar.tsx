@@ -11,6 +11,7 @@ import donum_logo from "@/public/donum_logo.png"
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 
 interface NavbarProps {
@@ -24,13 +25,15 @@ interface NavBodyProps {
   visible?: boolean;
 }
 
+interface NavItem {
+  name: string;
+  link: string;
+  onClick?: () => void;
+}
+
 interface NavItemsProps {
-  items: {
-    name: string;
-    link: string;
-  }[];
+  items: NavItem[];
   className?: string;
-  onItemClick?: () => void;
 }
 
 interface MobileNavProps {
@@ -71,7 +74,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     <motion.div
       ref={ref}
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("fixed inset-x-0 top-10 z-40 w-full", className)}
+      className={cn("fixed inset-x-0 top-10 z-50 w-full", className)}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -115,7 +118,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   );
 };
 
-export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
+export const NavItems = ({ items, className }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -129,7 +132,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
       {items.map((item, idx) => (
         <a
           onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
+          onClick={item.onClick}
           className="relative px-4 py-2 text-gray-100 hover:text-cyan-400 transition-colors"
           key={`link-${idx}`}
           href={item.link}
@@ -146,7 +149,6 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     </motion.div>
   );
 };
-
 
 export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
@@ -235,8 +237,9 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = () => {
   return (
-    <a
-      href="#"
+    <Link
+      href="/"
+      target="_blank"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
       <Image
@@ -248,7 +251,7 @@ export const NavbarLogo = () => {
         loading="lazy"
       />
       <span className="font-medium text-white">Donum</span>
-    </a>
+    </Link>
   );
 };
 
