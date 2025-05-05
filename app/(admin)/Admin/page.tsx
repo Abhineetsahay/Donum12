@@ -32,7 +32,7 @@ const Page = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-[#ffebeb] flex items-center justify-center relative">
+    <div className="h-screen w-full bg-[#0a0a23] flex items-center justify-center relative">
       <ToastContainer position="top-center" theme="colored" />
 
       <form

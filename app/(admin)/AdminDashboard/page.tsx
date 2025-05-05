@@ -17,15 +17,24 @@ import { Button } from "@/app/components/ui/button";
 import { Textarea } from "@/app/components/ui/textarea";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
+
 
 const auth = getAuth(app);
 const db = getDatabase(app);
 
 interface FormData {
   name: string;
-  details: string;
+  description: string;
   price: number;
   image: FileList;
+  type: "hero" | "normal";
 }
 
 const Page = () => {
@@ -40,6 +49,7 @@ const Page = () => {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -71,38 +81,42 @@ const Page = () => {
   }, [imageFile]);
 
   const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true); // disable button
-
+    setIsSubmitting(true);
+  
     try {
       if (!data.image?.[0]) {
         toast.error("Please upload an image.");
         setIsSubmitting(false);
         return;
       }
-
+  
       const formDataToUpload = new FormData();
       formDataToUpload.append("file", data.image[0]);
+  
       const response = await fetch("/api/uploadImage", {
         method: "POST",
         body: formDataToUpload,
       });
-
+  
       const uploadData = await response.json();
       const imageUrl = uploadData.url;
-
+  
       if (!imageUrl) {
         throw new Error("Image upload failed");
       }
-
-      await push(ref(db, "products"), {
+  
+      const productPath = data.type === "hero" ? "heroProducts" : "normalProducts";
+  
+      await push(ref(db, productPath), {
         name: data.name,
-        details: data.details,
+        description: data.description,
         price: data.price,
+        type: data.type,
         imageUrl,
         createdBy: user?.uid,
         createdAt: new Date().toISOString(),
       });
-
+  
       reset();
       setPreviewUrl(null);
       toast.success("Product added successfully! 🚀");
@@ -113,13 +127,14 @@ const Page = () => {
       setIsSubmitting(false);
     }
   };
+  
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="h-screen w-full bg-[#ffebeb] flex items-center justify-center relative">
+    <div className="h-screen w-full bg-[#0a0a23] flex items-center justify-center relative">
       <ToastContainer position="top-center" theme="colored" />
 
       <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col gap-6 w-[30rem]">
@@ -145,13 +160,36 @@ const Page = () => {
           {errors.price && (
             <span className="text-red-500 text-sm">Price is required</span>
           )}
+          <div>
+            <Select
+              onValueChange={(value) => {
+                // Manually set value since shadcn's Select doesn't integrate directly with react-hook-form
+                setValue("type", value as "hero" | "normal");
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select Product Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="hero">Hero Product</SelectItem>
+                <SelectItem value="normal">Normal Product</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.type && (
+              <span className="text-red-500 text-sm">
+                Product type is required
+              </span>
+            )}
+          </div>
 
           <Textarea
-            placeholder="Product Details"
-            {...register("details", { required: true })}
+            placeholder="Product description"
+            {...register("description", { required: true })}
           />
-          {errors.details && (
-            <span className="text-red-500 text-sm">Details are required</span>
+          {errors.description && (
+            <span className="text-red-500 text-sm">
+              description are required
+            </span>
           )}
 
           <Input

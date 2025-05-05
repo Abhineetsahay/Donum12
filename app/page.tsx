@@ -6,11 +6,10 @@ import { FAQ } from "./components/Sections/FAQ";
 import { Footer } from "./components/Sections/Footer";
 import { HomeNavbar } from "./components/Navbar";
 import { LoadingScreen } from "./components/LoadingSceen";
-// import { AboutSection } from "./components/Sections/AboutSection";
+// import SplineDesign from "./components/ui/SplineDesign";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  // const [showBoxes, setShowBoxes] = useState(false);
 
   const homeRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
@@ -19,7 +18,6 @@ export default function Home() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsLoading(false);
-      // setShowBoxes(true);
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
@@ -33,7 +31,7 @@ export default function Home() {
         scrollToContact={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
       />
         <Hero homeRef={homeRef}  />
-        {/* <AboutSection /> */}
+        {/* <SplineDesign/> */}
       
       <Products productRef={productRef} />
       <FAQ />

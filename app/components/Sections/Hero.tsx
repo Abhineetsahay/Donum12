@@ -48,12 +48,12 @@ export const Hero = ({
     };
   }, []);
 
-  const xRange = windowWidth < 768 ? [0, 0] : [0, -350];
-  const yRange = windowWidth < 768 ? [0, 950] : [0, 950];
+  const xRange = windowWidth < 768 ? [0, 0] : [0, -250];
+  const yRange = windowWidth < 768 ? [0, 950] : [0, 925];
 
   const x = useTransform(scrollYProgress, [0, 0.25], xRange);
   const y = useTransform(scrollYProgress, [0, 0.25], yRange);
-  const scale = useTransform(scrollYProgress, [0, 0.25], [1, 1.5]);
+  const scale = useTransform(scrollYProgress, [0, 0.25], [1, 1.1]);
   const rotate = useTransform(scrollYProgress, [0, 0.25], [0, 360]);
 
   const smoothX = useSpring(x, { stiffness: 300, damping: 15 });
@@ -62,15 +62,16 @@ export const Hero = ({
   const smoothRotate = useSpring(rotate, { stiffness: 300, damping: 15 });
 
   const textRef = useRef(null);
-  const isInView = useInView(textRef, { once: true }); // Run once when it enters
+  const isInView = useInView(textRef, { once: true });
   const [showText, setShowText] = useState(false);
 
-  // Delay show until in view
   useEffect(() => {
     if (isInView) {
       setShowText(true);
     }
   }, [isInView]);
+
+ 
 
   return (
     <>
@@ -134,8 +135,10 @@ export const Hero = ({
 
       <section
         ref={ref}
-        className="h-screen flex flex-col md:flex-row items-center justify-end px-8 gap-10"
+        className="h-screen flex flex-col md:flex-row items-center justify-end px-8 pb-4 gap-10"
       >
+        {/* <div ref={divRef} className="h-6 bg-transparent border border-dashed border-gray-300">
+        </div> */}
         <motion.div
           style={{ x: textX, opacity }}
           className="w-full md:w-1/2 text-white text-left space-y-8"

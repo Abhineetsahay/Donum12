@@ -2,12 +2,14 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const HoverEffect = ({
   items,
   className,
 }: {
   items: {
+    id: string;
     name: string;
     price: number;
     description: string;
@@ -52,16 +54,20 @@ export const HoverEffect = ({
 
           <Card className="relative z-10">
             <div className="relative w-full h-48 rounded-lg overflow-hidden">
-              <Image
-                src={item.imageUrl}
-                alt={item.name}
-                fill
-                className="object-cover"
-              />
+              <Link href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.name}
+                  fill
+                  className="object-cover"
+                />
+              </Link>
             </div>
             <CardTitle>{item.name}</CardTitle>
-            <p className="mt-2 text-lg font-semibold text-slate-200">₹{item.price}</p>
-            <CardDescription>{item.description}</CardDescription>
+            <p className="mt-2 text-lg font-semibold text-slate-200">
+              ₹{item.price}
+            </p>
+            <Carddescription>{item.description}</Carddescription>
           </Card>
         </div>
       ))}
@@ -96,13 +102,18 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("mt-4 text-slate-100 text-xl font-bold tracking-wide", className)}>
+    <h4
+      className={cn(
+        "mt-4 text-slate-100 text-xl font-bold tracking-wide",
+        className
+      )}
+    >
       {children}
     </h4>
   );
 };
 
-export const CardDescription = ({
+export const Carddescription = ({
   className,
   children,
 }: {
