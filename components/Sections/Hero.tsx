@@ -1,5 +1,11 @@
 "use client";
-import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import donum_logo from "@/public/donum_logo.png";
@@ -10,7 +16,7 @@ const revealVariant = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.1, delay },
+    transition: { duration: 0.05, delay },
   }),
 };
 
@@ -19,59 +25,61 @@ export const Hero = ({
 }: {
   homeRef: React.RefObject<HTMLDivElement | null>;
 }) => {
-  const { scrollYProgress } = useScroll();
-  const backgroundPosition = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0% 0%", "0% 40%"]
-  );
-
   const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll();
   const { scrollYProgress: aboutScrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center center"],
   });
 
+  const backgroundPosition = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0% 0%", "0% 50%"]
+  );
   const textX = useTransform(aboutScrollYProgress, [0, 1], ["50%", "0%"]);
   const opacity = useTransform(aboutScrollYProgress, [0, 1], [0, 1]);
 
-  const [windowWidth, setWindowWidth] = useState<number>(0);
-
+  const [windowWidth, setWindowWidth] = useState(0);
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+    const handleResize = () => setWindowWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const xRange = windowWidth < 768 ? [0, 0] : [0, -250];
-  const yRange = windowWidth < 768 ? [0, 950] : [0, 925];
+  const getRanges = (width: number) => {
+    if (width < 640)
+      return { x: [0, 0], y: [0, 820], scale: [1, 1.05], rotate: [0, 360] };
+    if (width < 1024)
+      return { x: [0, -150], y: [0, 900], scale: [1, 1.08], rotate: [0, 360] };
+    return { x: [0, -250], y: [0, 925], scale: [1, 1.1], rotate: [0, 360] };
+  };
+  const {
+    x: xRange,
+    y: yRange,
+    scale: scaleRange,
+    rotate: rotateRange,
+  } = getRanges(windowWidth);
 
-  const x = useTransform(scrollYProgress, [0, 0.25], xRange);
-  const y = useTransform(scrollYProgress, [0, 0.25], yRange);
-  const scale = useTransform(scrollYProgress, [0, 0.25], [1, 1.1]);
-  const rotate = useTransform(scrollYProgress, [0, 0.25], [0, 360]);
+  const x = useTransform(scrollYProgress, [0, 0.1], xRange);
+  const y = useTransform(scrollYProgress, [0, 0.1], yRange);
+  const scale = useTransform(scrollYProgress, [0, 0.1], scaleRange);
+  const rotate = useTransform(scrollYProgress, [0, 0.1], rotateRange);
 
-  const smoothX = useSpring(x, { stiffness: 300, damping: 15 });
-  const smoothY = useSpring(y, { stiffness: 300, damping: 15 });
-  const smoothScale = useSpring(scale, { stiffness: 300, damping: 15 });
-  const smoothRotate = useSpring(rotate, { stiffness: 300, damping: 15 });
+  const smoothX = useSpring(x, { stiffness: 300, damping: 5 });
+  const smoothY = useSpring(y, { stiffness: 300, damping: 5 });
+  const smoothScale = useSpring(scale, { stiffness: 300, damping: 5 });
+  const smoothRotate = useSpring(rotate, { stiffness: 300, damping: 5 });
 
   const textRef = useRef(null);
   const isInView = useInView(textRef, { once: true });
   const [showText, setShowText] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
-      setShowText(true);
-    }
+    if (isInView) setShowText(true);
   }, [isInView]);
-
- 
 
   return (
     <>
@@ -100,14 +108,14 @@ export const Hero = ({
               scale: smoothScale,
               rotate: smoothRotate,
             }}
-            className="relative z-10"
+            className="max-w-[80%] sm:max-w-[300px] mx-auto"
           >
             <Image
               src={donum_logo}
               alt="Donum Logo"
               width={250}
               height={250}
-              className="mb-8 object-contain rounded-3xl shadow-2xl"
+              className="mb-8 object-contain rounded-3xl shadow-2xl w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]"
               loading="lazy"
             />
           </motion.div>
@@ -137,8 +145,6 @@ export const Hero = ({
         ref={ref}
         className="h-screen flex flex-col md:flex-row items-center justify-end px-8 pb-4 gap-10"
       >
-        {/* <div ref={divRef} className="h-6 bg-transparent border border-dashed border-gray-300">
-        </div> */}
         <motion.div
           style={{ x: textX, opacity }}
           className="w-full md:w-1/2 text-white text-left space-y-8"

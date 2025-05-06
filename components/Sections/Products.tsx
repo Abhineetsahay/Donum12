@@ -72,15 +72,11 @@ export const Products = ({
       custom={0}
       className="bg-[#0d0d2b] w-full pt-10 pb-20 px-4 z-10 shadow-blue-900"
     >
-      <h6 className="text-3xl text-white font-bold mb-10 text-center">
-        Hero Products
-      </h6>
-      <HoverEffect items={heroProducts} className="mb-16" />
+      <h6 className="text-3xl text-white font-bold mb-10 text-center">Hero Products</h6>
+      <HoverEffect items={heroProducts} className="mb-16" isHero={true} />
 
-      <h6 className="text-2xl text-white font-semibold mb-8 text-center">
-        Normal Products
-      </h6>
-      <HoverEffect items={normalProducts} />
+      <h6 className="text-2xl text-white font-semibold mb-8 text-center">Normal Products</h6>
+      <HoverEffect items={normalProducts} isHero={false} />
     </motion.div>
   );
 };

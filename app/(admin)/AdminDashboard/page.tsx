@@ -12,9 +12,9 @@ import {
 } from "firebase/auth";
 import { app } from "@/lib/firebase";
 import { getDatabase, ref, push } from "firebase/database";
-import { Input } from "@/app/components/ui/input";
-import { Button } from "@/app/components/ui/button";
-import { Textarea } from "@/app/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -23,7 +23,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select";
+} from "@/components/ui/select";
 
 
 const auth = getAuth(app);
@@ -54,7 +54,7 @@ const Page = () => {
   } = useForm<FormData>();
 
   const imageFile = watch("image")?.[0];
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -163,7 +163,6 @@ const Page = () => {
           <div>
             <Select
               onValueChange={(value) => {
-                // Manually set value since shadcn's Select doesn't integrate directly with react-hook-form
                 setValue("type", value as "hero" | "normal");
               }}
             >

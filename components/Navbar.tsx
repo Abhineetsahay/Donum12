@@ -8,7 +8,7 @@ import {
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
-} from "@/app/components/ui/resizable-navbar";
+} from "@/components/ui/resizable-navbar";
 import { useState } from "react";
 
 interface HomeNavbarProps {

@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Hero } from "./components/Sections/Hero";
-import { Products } from "./components/Sections/Products";
-import { FAQ } from "./components/Sections/FAQ";
-import { Footer } from "./components/Sections/Footer";
-import { HomeNavbar } from "./components/Navbar";
-import { LoadingScreen } from "./components/LoadingSceen";
-// import SplineDesign from "./components/ui/SplineDesign";
+import { Hero } from "@/components/Sections/Hero";
+import { Products } from "@/components/Sections/Products";
+import { FAQ } from "@/components/Sections/FAQ";
+import { Footer } from "@/components/Sections/Footer";
+import { HomeNavbar } from "@/components/Navbar";
+import { LoadingScreen } from "@/components/LoadingSceen";
+
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +31,6 @@ export default function Home() {
         scrollToContact={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
       />
         <Hero homeRef={homeRef}  />
-        {/* <SplineDesign/> */}
       
       <Products productRef={productRef} />
       <FAQ />

@@ -7,6 +7,7 @@ import Link from "next/link";
 export const HoverEffect = ({
   items,
   className,
+  isHero,
 }: {
   items: {
     id: string;
@@ -16,8 +17,22 @@ export const HoverEffect = ({
     imageUrl: string;
   }[];
   className?: string;
+  isHero: boolean;
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set()); 
+
+  const toggleDescription = (id: string) => {
+    setExpanded((prev) => {
+      const newExpanded = new Set(prev);
+      if (newExpanded.has(id)) {
+        newExpanded.delete(id);
+      } else {
+        newExpanded.add(id);
+      }
+      return newExpanded;
+    });
+  };
 
   return (
     <div
@@ -41,7 +56,7 @@ export const HoverEffect = ({
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: 1,
-                  backgroundColor: "#1e1b4b", // Dark Blue (Navy) hover
+                  backgroundColor: "#1e1b4b",
                   transition: { duration: 0.3 },
                 }}
                 exit={{
@@ -54,7 +69,11 @@ export const HoverEffect = ({
 
           <Card className="relative z-10">
             <div className="relative w-full h-48 rounded-lg overflow-hidden">
-              <Link href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+              <Link
+                href={item.imageUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image
                   src={item.imageUrl}
                   alt={item.name}
@@ -67,7 +86,38 @@ export const HoverEffect = ({
             <p className="mt-2 text-lg font-semibold text-slate-200">
               ₹{item.price}
             </p>
-            <Carddescription>{item.description}</Carddescription>
+            <motion.div
+              layout
+              initial={{ opacity: 0.8 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Carddescription>
+                {isHero || expanded.has(item.id) ? (
+                  <>
+                    {item.description}{" "}
+                    {!isHero && (
+                      <button
+                        onClick={() => toggleDescription(item.id)}
+                        className="text-blue-500 font-semibold ml-1"
+                      >
+                        See Less
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {item.description.slice(0, 100)}...{" "}
+                    <button
+                      onClick={() => toggleDescription(item.id)}
+                      className="text-blue-500 font-semibold ml-1"
+                    >
+                      See More
+                    </button>
+                  </>
+                )}
+              </Carddescription>
+            </motion.div>
           </Card>
         </div>
       ))}
@@ -123,7 +173,7 @@ export const Carddescription = ({
   return (
     <p
       className={cn(
-        "mt-2 text-slate-400 tracking-wide leading-relaxed text-sm",
+        "mt-2 text-slate-400 tracking-wide leading-relaxed text-sm break-words",
         className
       )}
     >
