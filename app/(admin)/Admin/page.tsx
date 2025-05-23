@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "@/lib/firebase/firebase";
+import { app } from "@/lib/firebase";
 import { ToastContainer, toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 
@@ -32,7 +32,7 @@ const Page = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-[#ffebeb] flex items-center justify-center relative">
+    <div className="h-screen w-full bg-[#0a0a23] flex items-center justify-center relative">
       <ToastContainer position="top-center" theme="colored" />
 
       <form
