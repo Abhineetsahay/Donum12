@@ -70,7 +70,7 @@ export const Products = ({
       viewport={{ once: true, amount: 0.15 }}
       variants={revealVariant}
       custom={0}
-      className="bg-[#0d0d2b] w-full pt-10 pb-20 px-4 z-10 shadow-blue-900"
+      className=" w-full pt-10 pb-20 px-4 z-10 "
     >
       <h6 className="text-3xl text-white font-bold mb-10 text-center">Hero Products</h6>
       <HoverEffect items={heroProducts} className="mb-16" isHero={true} />

@@ -19,7 +19,7 @@ export const Footer = ({ contactRef }: { contactRef: React.RefObject<HTMLElement
     viewport={{ once: true, amount: 0.2 }}
     variants={revealVariant}
     custom={0}
-    className="relative w-full bg-gradient-to-r from-[#1c1c54] via-[#2b2b80] to-[#3d3da8] text-white py-12 mt-20 z-10"
+    className="relative w-full  text-white py-12 mt-20 z-10 border-t border-white/20 text-sm "
   >
     <div className="flex justify-center items-center flex-col z-10">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
