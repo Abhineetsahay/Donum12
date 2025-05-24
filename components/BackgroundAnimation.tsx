@@ -10,7 +10,7 @@ const BackgroundAnimation = ({ minDelay = 1.5 }: BackgroundAnimationProps) => {
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {Array.from({ length: 15 }).map((_, i) => (
+      {Array.from({ length: 25 }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-40 h-40 rounded-full bg-blue-500/10 backdrop-blur-xl"
@@ -19,7 +19,7 @@ const BackgroundAnimation = ({ minDelay = 1.5 }: BackgroundAnimationProps) => {
             left: `${Math.random() * 80 + 10}%`,
             zIndex: 0,
           }}
-          animate={{ y: [0, -20, 0], opacity: [0.4, 0.6, 0.4] }}
+          animate={{ y: [0, -80, 0], opacity: [0.4, 0.6, 0.4] }}
           transition={{
             duration: 6 + Math.random() * 3,
             repeat: Infinity,

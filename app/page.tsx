@@ -38,7 +38,7 @@ export default function Home() {
         }
       />
       <Hero />
-      <ShootingStars className="absolute top-0 left-0 w-full h-full" minDelay={500} maxDelay={1500}/>
+      <ShootingStars className="absolute top-0 left-0 w-full h-full" minDelay={500} maxDelay={1500} starWidth={20}/>
       
       <BackgroundAnimation />
       <Products productRef={productRef} />

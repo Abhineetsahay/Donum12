@@ -1,0 +1,165 @@
+"use client";
+import React from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  MotionValue,
+} from "motion/react";
+import Image from "next/image";
+
+export const HeroParallax = ({
+  products,
+  onProductClick,
+}: {
+  products: {
+    title: string;
+    link: string;
+    thumbnail: string;
+  }[];
+  onProductClick?: (index: number) => void;
+}) => {
+  const firstRow = products.slice(0, 5);
+  const secondRow = products.slice(5, 10);
+  const thirdRow = products.slice(10, 15);
+  const ref = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+
+  const translateX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, 400]),
+    springConfig
+  );
+  const translateXReverse = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -400]),
+    springConfig
+  );
+
+  const rotateX = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    springConfig
+  );
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    springConfig
+  );
+  const rotateZ = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    springConfig
+  );
+  const translateY = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    springConfig
+  );
+  return (
+    <div
+      ref={ref}
+      className="h-[250vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+    >
+      <Header />
+      <motion.div
+        style={{
+          rotateX,
+          rotateZ,
+          translateY,
+          opacity,
+        }}
+        className=""
+      >
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+          {firstRow.map((product, i) => (
+            <ProductCard
+              product={product}
+              translate={translateX}
+              key={product.title}
+              onClick={() => onProductClick && onProductClick(i)}
+            />
+          ))}
+
+          {secondRow.map((product, i) => (
+            <ProductCard
+              product={product}
+              translate={translateXReverse}
+              key={product.title}
+              onClick={() =>
+                onProductClick && onProductClick(i + firstRow.length)
+              }
+            />
+          ))}
+
+          {thirdRow.map((product, i) => (
+            <ProductCard
+              product={product}
+              translate={translateX}
+              key={product.title}
+              onClick={() =>
+                onProductClick &&
+                onProductClick(i + firstRow.length + secondRow.length)
+              }
+            />
+          ))}
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+
+export const Header = () => {
+  return (
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
+      <h1 className="text-3xl md:text-7xl font-bold text-white drop-shadow-lg">
+        The 3D <br /> Printing
+      </h1>
+      <p className="max-w-2xl text-base md:text-xl mt-8 text-gray-300 drop-shadow">
+        We build beautiful products with the latest technologies and frameworks.
+        We are a team of passionate developers and designers that love to build
+        amazing products.
+      </p>
+    </div>
+  );
+};
+
+export const ProductCard = ({
+  product,
+  translate,
+  onClick,
+}: {
+  product: {
+    title: string;
+    link: string;
+    thumbnail: string;
+  };
+  translate: MotionValue<number>;
+  onClick?: () => void;
+}) => {
+  return (
+    <motion.div
+      style={{
+        x: translate,
+      }}
+      whileHover={{
+        y: -20,
+      }}
+      key={product.title}
+      className="group/product h-96 w-[30rem] relative shrink-0"
+    >
+      <Image
+        src={product.thumbnail}
+        height={600}
+        width={600}
+        className="object-cover object-left-top absolute h-full w-full inset-0 cursor-pointer"
+        alt={product.title}
+        onClick={onClick}
+      />
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-90 bg-black/80 backdrop-blur-sm pointer-events-none transition-opacity duration-300"></div>
+      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white text-xl font-semibold drop-shadow-lg transition-opacity duration-300">
+        {product.title}
+      </h2>
+    </motion.div>
+  );
+};
