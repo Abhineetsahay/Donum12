@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import donum_logo from "@/public/donum_logo.png";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
-import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   const sectionRef = useRef(null);
@@ -15,9 +14,11 @@ export const Hero = () => {
   });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", () => {
-      if (!animationDone) {
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      if (v >= 0.95 && !animationDone) {
         setAnimationDone(true);
+      } else if (v < 0.95 && animationDone) {
+        // setAnimationDone(false);
       }
     });
     return () => unsubscribe();
@@ -29,7 +30,7 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 md:px-12"
+      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-12 md:px-12"
     >
       <div className="overflow-hidden shadow-lg w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
         <div className="absolute w-full h-full bg-blue-500/10 blur-2xl rounded-full z-0 animate-pulse"></div>
@@ -42,10 +43,8 @@ export const Hero = () => {
           priority
         />
       </div>
-
       <div
-        className="w-full md:w-1/2 flex items-center justify-center md:h-screen  top-0 self-start relative"
-        style={{ minHeight: "350px" }}
+        className="w-full md:w-1/2 min-h-[350px] flex items-center justify-center md:h-screen top-0 self-start relative"
       >
         <AnimatePresence mode="wait">
           {!animationDone ? (
@@ -57,29 +56,14 @@ export const Hero = () => {
               transition={{ duration: 0.6 }}
               className="flex flex-col items-center justify-center text-center w-full h-full px-2 md:px-8"
             >
-              <div className="h-[50vh] flex flex-col items-center justify-start ">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-6 text-left">
-                <TextGenerateEffect words={words} />
-              </h1>
-              <p className="text-lg text-gray-300 mb-8 text-left">
-                Transform your jewelry designs into reality with our
-                cutting-edge 3D printing technology.
-              </p>
-              <div className="flex gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105"
-                >
-                  Get Started
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-black border-white hover:bg-white px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105"
-                >
-                  Learn More
-                </Button>
-              </div>
+              <div className="h-[52vh] flex flex-col items-center justify-start">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-6 text-left">
+                  <TextGenerateEffect words={words} />
+                </h1>
+                <p className="text-lg text-gray-300 mb-8 text-left">
+                  Transform your jewelry designs into reality with our
+                  cutting-edge 3D printing technology.
+                </p>
               </div>
             </motion.div>
           ) : (
@@ -90,7 +74,7 @@ export const Hero = () => {
               transition={{ duration: 0.6 }}
               className="flex flex-col items-center justify-center text-center w-full h-full px-2 md:px-8"
             >
-              <div className="h-[50vh] flex flex-col items-center justify-start ">
+              <div className="h-[52vh] flex flex-col items-center justify-start">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
