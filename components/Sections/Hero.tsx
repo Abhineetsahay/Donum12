@@ -30,8 +30,9 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-12 md:px-12"
+      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-28 md:px-12"
     >
+      <div></div>
       <div className="overflow-hidden shadow-lg w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
         <div className="absolute w-full h-full bg-blue-500/10 blur-2xl rounded-full z-0 animate-pulse"></div>
         <Image

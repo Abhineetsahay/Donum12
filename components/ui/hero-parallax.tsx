@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
   MotionValue,
+  useMotionValueEvent,
 } from "motion/react";
 import Image from "next/image";
+import clsx from "clsx";
 
 export const HeroParallax = ({
   products,
@@ -56,10 +58,21 @@ export const HeroParallax = ({
     useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
     springConfig
   );
+
+  
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (value >= 0.2) {
+      setIsScrollable(true);
+    } else {
+      setIsScrollable(false);
+    }
+  });
   return (
     <div
       ref={ref}
-      className="h-[250vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[250vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -71,7 +84,14 @@ export const HeroParallax = ({
         }}
         className=""
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+        <motion.div
+          className={clsx(
+            "flex gap-20 transition-all duration-1000",
+            isScrollable
+              ? "overflow-x-auto whitespace-nowrap px-10 scroll-smooth scrollbar-hide"
+              : "overflow-hidden"
+          )}
+        >
           {firstRow.map((product, i) => (
             <ProductCard
               product={product}

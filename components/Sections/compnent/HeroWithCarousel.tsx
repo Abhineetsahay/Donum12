@@ -1,9 +1,8 @@
-// Parent component that combines HeroParallax and Carousel
 "use client";
 
-import { useState } from "react";
 import { HeroParallax } from "../../ui/hero-parallax";
-import { Carousel } from "../../ui/carousel"; // your Carousel component from code above
+import { Carousel } from "../../ui/carousel";
+import { useCarousel } from "@/context/CarouselContext";
 
 interface Product {
   id: string;
@@ -18,8 +17,7 @@ export default function HeroWithCarousel({
 }: {
   products: Product[];
 }) {
-  const [carouselOpen, setCarouselOpen] = useState(false);
-  const [startIndex, setStartIndex] = useState(0);
+  const { carouselOpen, setCarouselOpen, startIndex, setStartIndex } = useCarousel();
 
   const handleProductClick = (index: number) => {
     setStartIndex(index);
@@ -35,7 +33,7 @@ export default function HeroWithCarousel({
   }));
 
   return (
-    <div>
+    <>
       <HeroParallax
         products={products.map((product) => ({
           title: product.name,
@@ -46,9 +44,9 @@ export default function HeroWithCarousel({
       />
 
       {carouselOpen && (
-        <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50">
+        <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-[99999] pointer-events-auto">
           <button
-            className="absolute top-4 right-4 text-white text-3xl"
+            className="absolute top-4 right-4 text-white text-3xl z-[99999]"
             onClick={() => setCarouselOpen(false)}
           >
             &times;
@@ -56,6 +54,9 @@ export default function HeroWithCarousel({
           <Carousel slides={slides} initialIndex={startIndex} />
         </div>
       )}
-    </div>
+      {!carouselOpen && (
+        <div className="fixed inset-0 pointer-events-none"></div>
+      )}
+    </>
   );
 }

@@ -9,7 +9,7 @@ const BackgroundAnimation = ({ minDelay = 1.5 }: BackgroundAnimationProps) => {
   const containerRef = useRef(null);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none -z-50">
       {Array.from({ length: 25 }).map((_, i) => (
         <motion.div
           key={i}
