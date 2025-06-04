@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from 'react';
-import { ToastContainer } from "react-toastify"; 
+import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
+import { db } from "@/lib/firebase";
+import { ref, push } from "firebase/database";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 // interface ProductReview {
 //   id: string;
@@ -12,31 +17,45 @@ import "react-toastify/dist/ReactToastify.css";
 //   comment: string;
 // }
 
-const ProductReviews = () => {
-  const [reviewerName, setReviewerName] = useState('');
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
-  const [productName, setProductName] = useState('');
+interface ReviewFormData {
+  productName: string;
+  reviewerName: string;
+  comment: string;
+}
 
-  const handleSubmitReview = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Submitted Review:', { reviewerName, rating, comment, productName });
-    setReviewerName('');
-    setRating(5);
-    setComment('');
-    setProductName('');
+const ProductReviews = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ReviewFormData>();
+
+  const onSubmit = async (data: ReviewFormData) => {
+    try {
+      await push(ref(db, "customerReviews"), {
+        ...data,
+        createdAt: new Date().toISOString(),
+      });
+
+      toast.success("Review submitted successfully! 🎉");
+      reset();
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      toast.error("Failed to submit review. Please try again.");
+    }
   };
 
   return (
-    <div className="w-full py-12  text-white flex flex-col z-[50]">
+    <div className="w-full py-12 text-white flex flex-col z-10">
       <ToastContainer position="top-center" theme="colored" />
 
-      <div className="w-full max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-white mb-8">Product Reviews</h2>
+      <div className="w-full max-w-4xl mx-auto px-4 flex flex-col">
+        <h2 className="text-3xl font-bold text-center text-white mb-8">Customer Reviews</h2>
         
         {/* <div className="space-y-8 mb-12">
           {dummyReviews.map(review => (
-            <div key={review.id} className="bg-white p-6 rounded-lg shadow">
+            <div key={review.id} className="bg-white p-6 rounded-lg shadow"> 
               <div className="flex items-center mb-4">
                 <p className="text-lg font-semibold text-gray-900 mr-4">{review.reviewerName}</p>
                 <span className="text-yellow-500">{'★'.repeat(review.rating)}{ '☆'.repeat(5 - review.rating)}</span>
@@ -49,61 +68,51 @@ const ProductReviews = () => {
 
         <div className="mt-8 bg-[#101033] p-6 rounded-lg shadow w-full">
           <h3 className="text-xl font-semibold text-white mb-4">Leave a Review</h3>
-          <form onSubmit={handleSubmitReview} className="w-full flex flex-col gap-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
             <div>
-              <label htmlFor="productName" className="block text-sm font-medium text-gray-300">Product ID</label>
-              <input
-                type="text"
+              <label htmlFor="productName" className="block text-sm font-medium text-gray-300">Product Name</label>
+              <Input
                 id="productName"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                className="mt-1 p-2 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2"
-                required
+                {...register("productName", { required: "Product name is required" })}
+                className="mt-1 bg-gray-700 text-white border-gray-600"
               />
+              {errors.productName && (
+                <span className="text-red-500 text-sm">{errors.productName.message}</span>
+              )}
             </div>
+
             <div>
               <label htmlFor="reviewerName" className="block text-sm font-medium text-gray-300">Your Name</label>
-              <input
-                type="text"
+              <Input
                 id="reviewerName"
-                value={reviewerName}
-                onChange={(e) => setReviewerName(e.target.value)}
-                className="mt-1 p-2 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2"
-                required
+                {...register("reviewerName", { required: "Your name is required" })}
+                className="mt-1 bg-gray-700 text-white border-gray-600"
               />
+              {errors.reviewerName && (
+                <span className="text-red-500 text-sm">{errors.reviewerName.message}</span>
+              )}
             </div>
-            <div>
-              <label htmlFor="rating" className="block text-sm font-medium text-gray-300">Rating</label>
-              <select
-                id="rating"
-                value={rating}
-                onChange={(e) => setRating(parseInt(e.target.value, 10))}
-                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2"
-                required
-              >
-                {/* {[☆, ☆, ☆, ☆, ☆].map(num => <option key={num} value={num}>{num} Stars</option>)} */}
-                
-              </select>
-            </div>
+
             <div>
               <label htmlFor="comment" className="block text-sm font-medium text-gray-300">Comment</label>
-              <textarea
+              <Textarea
                 id="comment"
                 rows={4}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2"
-                required
-              ></textarea>
+                {...register("comment", { required: "Comment is required" })}
+                className="mt-1 bg-gray-700 text-white border-gray-600"
+              />
+              {errors.comment && (
+                <span className="text-red-500 text-sm">{errors.comment.message}</span>
+              )}
             </div>
-            <div>
-              <button
-                type="submit"
-                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Submit Review
-              </button>
-            </div>
+
+            <Button
+              type="submit"
+              className="mt-2 bg-indigo-600 hover:bg-indigo-700"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit Review"}
+            </Button>
           </form>
         </div>
 

@@ -6,10 +6,10 @@ import { FAQ } from "@/components/Sections/FAQ";
 import { Footer } from "@/components/Sections/Footer";
 import { HomeNavbar } from "@/components/Navbar";
 import { LoadingScreen } from "@/components/LoadingSceen";
-import BackgroundAnimation from "@/components/BackgroundAnimation";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 import { CarouselProvider, useCarousel } from "@/context/CarouselContext";
 import ProductReviews from "@/components/Sections/Review";
+import BackgroundAnimation from "@/components/BackgroundAnimation";
+import Testimonals from "@/components/Sections/Testimonals";
 
 function MainContent() {
   const { carouselOpen } = useCarousel();
@@ -32,12 +32,11 @@ function MainContent() {
           }
         />
       )}
-      <Hero />
-      <ShootingStars className="absolute top-0 left-0 w-full h-full" minDelay={500} maxDelay={1500} starWidth={20}/>
-      
+      <Hero homeRef={homeRef} />
       <BackgroundAnimation />
       <Products productRef={productRef} />
       <FAQ />
+      <Testimonals />
       <ProductReviews />
       <Footer contactRef={contactRef} />
     </div>
@@ -55,7 +54,7 @@ export default function Home() {
   }, []);
 
   if (isLoading) return <LoadingScreen />;
-  
+
   return (
     <CarouselProvider>
       <MainContent />

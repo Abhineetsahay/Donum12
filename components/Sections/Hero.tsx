@@ -5,7 +5,7 @@ import Image from "next/image";
 import donum_logo from "@/public/donum_logo.png";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
 
-export const Hero = () => {
+export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | null> }) => {
   const sectionRef = useRef(null);
   const [animationDone, setAnimationDone] = useState(false);
   const { scrollYProgress } = useScroll({
@@ -29,12 +29,13 @@ export const Hero = () => {
 
   return (
     <section
-      ref={sectionRef}
+      // ref={sectionRef}
+      ref={homeRef}
       className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-28 md:px-12"
     >
-      <div></div>
-      <div className="overflow-hidden shadow-lg w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
-        <div className="absolute w-full h-full bg-blue-500/10 blur-2xl rounded-full z-0 animate-pulse"></div>
+      <div 
+      className="overflow-hidden w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
+        <div className="absolute w-full h-full blur-2xl rounded-full z-0 animate-pulse"></div>
         <Image
           src={donum_logo}
           alt="Donum Logo"

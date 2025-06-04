@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "motion/react";
 import { useRef } from "react";
 
@@ -9,7 +11,7 @@ const BackgroundAnimation = ({ minDelay = 1.5 }: BackgroundAnimationProps) => {
   const containerRef = useRef(null);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none -z-50">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
       {Array.from({ length: 25 }).map((_, i) => (
         <motion.div
           key={i}

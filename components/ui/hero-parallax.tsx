@@ -5,7 +5,7 @@ import {
   useScroll,
   useTransform,
   useSpring,
-  MotionValue,
+  // MotionValue,
   useMotionValueEvent,
 } from "motion/react";
 import Image from "next/image";
@@ -33,14 +33,14 @@ export const HeroParallax = ({
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 400]),
-    springConfig
-  );
-  const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -400]),
-    springConfig
-  );
+  // const translateX = useSpring(
+  //   useTransform(scrollYProgress, [0, 1], [0, 400]),
+  //   springConfig
+  // );
+  // const translateXReverse = useSpring(
+  //   useTransform(scrollYProgress, [0, 1], [0, -400]),
+  //   springConfig
+  // );
 
   const rotateX = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [15, 0]),
@@ -88,14 +88,14 @@ export const HeroParallax = ({
           className={clsx(
             "flex gap-20 transition-all duration-1000",
             isScrollable
-              ? "overflow-x-auto whitespace-nowrap px-10 scroll-smooth scrollbar-hide"
+              ? "overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
               : "overflow-hidden"
           )}
         >
           {firstRow.map((product, i) => (
             <ProductCard
               product={product}
-              translate={translateX}
+              // translate={translateX}
               key={product.title}
               onClick={() => onProductClick && onProductClick(i)}
             />
@@ -104,7 +104,7 @@ export const HeroParallax = ({
           {secondRow.map((product, i) => (
             <ProductCard
               product={product}
-              translate={translateXReverse}
+              // translate={translateXReverse}
               key={product.title}
               onClick={() =>
                 onProductClick && onProductClick(i + firstRow.length)
@@ -115,7 +115,7 @@ export const HeroParallax = ({
           {thirdRow.map((product, i) => (
             <ProductCard
               product={product}
-              translate={translateX}
+              // translate={translateX}
               key={product.title}
               onClick={() =>
                 onProductClick &&
@@ -146,7 +146,7 @@ export const Header = () => {
 
 export const ProductCard = ({
   product,
-  translate,
+  // translate,
   onClick,
 }: {
   product: {
@@ -154,13 +154,13 @@ export const ProductCard = ({
     link: string;
     thumbnail: string;
   };
-  translate: MotionValue<number>;
+  // translate: MotionValue<number>;
   onClick?: () => void;
 }) => {
   return (
     <motion.div
       style={{
-        x: translate,
+        // x: translate,
       }}
       whileHover={{
         y: -20,

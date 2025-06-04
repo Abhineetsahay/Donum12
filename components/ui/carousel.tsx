@@ -174,9 +174,14 @@ interface CarouselProps {
 export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
   const [current, setCurrent] = useState(initialIndex);
   const { setCarouselOpen } = useCarousel();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setCurrent(initialIndex);
+    if (carouselRef.current) {
+      const slideWidth = carouselRef.current.offsetWidth;
+      carouselRef.current.scrollLeft = initialIndex * slideWidth;
+    }
   }, [initialIndex]);
 
   useEffect(() => {
@@ -190,15 +195,12 @@ export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [setCarouselOpen]);
 
-  // const handlePreviousClick = () => {
-  //   const previous = current - 1;
-  //   setCurrent(previous < 0 ? slides.length - 1 : previous);
-  // };
-
-  // const handleNextClick = () => {
-  //   const next = current + 1;
-  //   setCurrent(next === slides.length ? 0 : next);
-  // };
+  const handleWheel = (e: React.WheelEvent) => {
+    if (carouselRef.current) {
+      e.preventDefault();
+      carouselRef.current.scrollLeft += e.deltaY;
+    }
+  };
 
   const handleSlideClick = (index: number) => {
     if (current !== index) {
@@ -210,13 +212,15 @@ export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
 
   return (
     <div
-      className="relative min-w-full h-11/12  pt-14 overflow-x-auto scrollbar-hide"
+      ref={carouselRef}
+      className="relative min-w-full h-11/12 pt-14 overflow-x-auto scrollbar-hide"
       aria-labelledby={`carousel-heading-${id}`}
+      onWheel={handleWheel}
     >
       <ul
         className="absolute flex mx-[-4vmin] transition-transform duration-1000 ease-in-out"
         style={{
-          transform: `translateX(-${current * (100 / slides.length)}%)`,
+          transform: 'none',
         }}
       >
         {slides.map((slide, index) => (
