@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { ref, onValue, query, limitToLast, orderByChild } from "firebase/database";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "../ui/card";
+import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 interface Review {
   id: string;
@@ -46,6 +46,12 @@ const Testimonals = () => {
     return () => unsubscribe();
   }, []);
 
+  const movingCardsItems = reviews.map(review => ({
+    quote: review.comment,
+    name: review.reviewerName,
+    title: review.productName
+  }));
+
   return (
     <motion.section
       initial="hidden"
@@ -53,7 +59,7 @@ const Testimonals = () => {
       viewport={{ once: true, amount: 0.2 }}
       variants={revealVariant}
       custom={0}
-      className="w-full py-20 px-4 z-10"
+      className="z-10"
     >
       <motion.h2
         variants={revealVariant}
@@ -62,34 +68,12 @@ const Testimonals = () => {
       >
         What Our Customers Say
       </motion.h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {reviews.map((review, index) => (
-          <motion.div
-            key={review.id}
-            variants={revealVariant}
-            custom={0.2 + index * 0.1}
-          >
-            <Card className="bg-[#0a0a23] border-slate-700 h-full">
-              <CardContent className="p-6">
-                <div className="flex flex-col h-full">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {review.reviewerName}
-                    </h3>
-                    <p className="text-slate-400 text-sm mb-4">
-                      Product: {review.productName}
-                    </p>
-                    <p className="text-slate-300">{review.comment.slice(0, 25)}</p>
-                  </div>
-                  <div className="mt-4 text-slate-500 text-sm">
-                    {new Date(review.createdAt).toLocaleDateString()}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+      <div className="mt-16">
+        <InfiniteMovingCards
+          items={movingCardsItems}
+          direction="right"
+          speed="normal"
+        />
       </div>
     </motion.section>
   );

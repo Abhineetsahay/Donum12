@@ -6,20 +6,25 @@ import donum_logo from "@/public/donum_logo.png";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
 
 export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | null> }) => {
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const [animationDone, setAnimationDone] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
+  const setRefs = (element: HTMLDivElement | null) => {
+    sectionRef.current = element;
+    if (homeRef) {
+      homeRef.current = element;
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (v) => {
       if (v >= 0.95 && !animationDone) {
         setAnimationDone(true);
-      } else if (v < 0.95 && animationDone) {
-        // setAnimationDone(false);
-      }
+      } 
     });
     return () => unsubscribe();
   }, [scrollYProgress, animationDone]);
@@ -29,8 +34,7 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
 
   return (
     <section
-      // ref={sectionRef}
-      ref={homeRef}
+      ref={setRefs}
       className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-28 md:px-12"
     >
       <div 

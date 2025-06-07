@@ -7,9 +7,9 @@ import { Footer } from "@/components/Sections/Footer";
 import { HomeNavbar } from "@/components/Navbar";
 import { LoadingScreen } from "@/components/LoadingSceen";
 import { CarouselProvider, useCarousel } from "@/context/CarouselContext";
-import ProductReviews from "@/components/Sections/Review";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import Testimonals from "@/components/Sections/Testimonals";
+import UserForms from "@/components/Sections/UserForms";
 
 function MainContent() {
   const { carouselOpen } = useCarousel();
@@ -37,7 +37,7 @@ function MainContent() {
       <Products productRef={productRef} />
       <FAQ />
       <Testimonals />
-      <ProductReviews />
+      <UserForms/>
       <Footer contactRef={contactRef} />
     </div>
   );

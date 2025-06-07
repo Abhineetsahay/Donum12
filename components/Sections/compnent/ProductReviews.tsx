@@ -9,14 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-// interface ProductReview {
-//   id: string;
-//   productName: string;
-//   reviewerName: string;
-//   rating: number;
-//   comment: string;
-// }
-
 interface ReviewFormData {
   productName: string;
   reviewerName: string;
@@ -51,20 +43,8 @@ const ProductReviews = () => {
       <ToastContainer position="top-center" theme="colored" />
 
       <div className="w-full max-w-4xl mx-auto px-4 flex flex-col">
-        <h2 className="text-3xl font-bold text-center text-white mb-8">Customer Reviews</h2>
+        <h2 className="text-3xl font-bold text-center text-white mb-8">Customer Review</h2>
         
-        {/* <div className="space-y-8 mb-12">
-          {dummyReviews.map(review => (
-            <div key={review.id} className="bg-white p-6 rounded-lg shadow"> 
-              <div className="flex items-center mb-4">
-                <p className="text-lg font-semibold text-gray-900 mr-4">{review.reviewerName}</p>
-                <span className="text-yellow-500">{'★'.repeat(review.rating)}{ '☆'.repeat(5 - review.rating)}</span>
-              </div>
-              <p className="text-gray-700 mb-4">{review.comment}</p>
-              <p className="text-sm text-gray-600">Review for Product ID: {review.productId}</p>
-            </div>
-          ))}
-        </div> */}
 
         <div className="mt-8 bg-[#101033] p-6 rounded-lg shadow w-full">
           <h3 className="text-xl font-semibold text-white mb-4">Leave a Review</h3>
