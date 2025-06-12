@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { ref, onValue, query, limitToLast, orderByChild } from "firebase/database";
+import {
+  ref,
+  onValue,
+  query,
+  limitToLast,
+  orderByChild,
+} from "firebase/database";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
@@ -28,7 +34,11 @@ const Testimonals = () => {
 
   useEffect(() => {
     const reviewsRef = ref(db, "customerReviews");
-    const recentReviewsQuery = query(reviewsRef, orderByChild("createdAt"), limitToLast(3));
+    const recentReviewsQuery = query(
+      reviewsRef,
+      orderByChild("createdAt"),
+      limitToLast(8)
+    );
 
     const unsubscribe = onValue(recentReviewsQuery, (snapshot) => {
       const data = snapshot.val();
@@ -38,7 +48,7 @@ const Testimonals = () => {
             id,
             ...(value as Omit<Review, "id">),
           }))
-          .reverse(); 
+          .reverse();
         setReviews(loaded);
       }
     });
@@ -46,21 +56,22 @@ const Testimonals = () => {
     return () => unsubscribe();
   }, []);
 
-  const movingCardsItems = reviews.map(review => ({
+  const movingCardsItems = reviews.map((review) => ({
     quote: review.comment,
     name: review.reviewerName,
-    title: review.productName
+    title: review.productName,
   }));
 
   return (
-    <motion.section
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={revealVariant}
-      custom={0}
-      className="z-10"
-    >
+    // <motion.section
+    //   initial="hidden"
+    //   whileInView="visible"
+    //   viewport={{ once: true, amount: 0.2 }}
+    //   variants={revealVariant}
+    //   custom={0}
+    //   className="z-10"
+    // >
+    <>
       <motion.h2
         variants={revealVariant}
         custom={0.1}
@@ -68,14 +79,15 @@ const Testimonals = () => {
       >
         What Our Customers Say
       </motion.h2>
-      <div className="mt-16">
+      <div className="h-[40rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
         <InfiniteMovingCards
           items={movingCardsItems}
           direction="right"
-          speed="normal"
+          speed="fast"
         />
       </div>
-    </motion.section>
+      </>
+    // </motion.section>
   );
 };
 

@@ -60,7 +60,7 @@ export function HomeNavbar({
             isOpen={isMobileMenuOpen}
             onClose={() => setIsMobileMenuOpen(false)}
           >
-            <div className="w-full flex justify-end pr-8">
+            <div className="w-full flex justify-end pr-4 pt-3">
               <MobileNavToggle
                 isOpen={isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

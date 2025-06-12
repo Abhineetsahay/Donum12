@@ -213,7 +213,7 @@ export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
   return (
     <div
       ref={carouselRef}
-      className="relative min-w-full h-11/12 pt-14 overflow-x-auto scrollbar-hide"
+      className="relative min-w-full h-11/12 flex items-center pt-14 overflow-x-auto scrollbar-hide"
       aria-labelledby={`carousel-heading-${id}`}
       onWheel={handleWheel}
     >
