@@ -5,6 +5,8 @@ import { ref, onValue } from "firebase/database";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+import HeroWithCarousel from "./compnent/HeroWithCarousel";
+
 const revealVariant = {
   hidden: { opacity: 0, y: 30 },
   visible: (delay = 0) => ({
@@ -70,13 +72,20 @@ export const Products = ({
       viewport={{ once: true, amount: 0.15 }}
       variants={revealVariant}
       custom={0}
-      className=" w-full pt-10 pb-20 px-4 z-10 "
+      className="w-full h-full pt-6 md:pt-10 pb-10 md:pb-20 px-4 md:px-8 flex flex-col"
     >
-      <h6 className="text-3xl text-white font-bold mb-10 text-center">Hero Products</h6>
-      <HoverEffect items={heroProducts} className="mb-16" isHero={true} />
-
-      <h6 className="text-2xl text-white font-semibold mb-8 text-center">Normal Products</h6>
-      <HoverEffect items={normalProducts} isHero={false} />
+      <div className="mt-6 md:mt-10 flex flex-col z-20">
+        <h6 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-6 md:mb-10 text-center">
+          Customized Products
+        </h6>
+        <HeroWithCarousel products={heroProducts} />
+      </div>
+      <div className="flex flex-col z-[15] mt-8 md:mt-12">
+        <h6 className="text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-6 md:mb-8 text-center">
+          Other Products
+        </h6>
+        <HoverEffect items={normalProducts} isHero={false} />
+      </div>
     </motion.div>
   );
 };
