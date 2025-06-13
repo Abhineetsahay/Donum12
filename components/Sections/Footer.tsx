@@ -25,7 +25,7 @@ export const Footer = ({
     custom={0}
     className="relative w-full text-white py-12 mt-20 border-t border-white/20 text-sm "
   >
-    <div className="flex justify-center items-center flex-col z-10">
+    <div className="flex justify-center items-center flex-col z-0">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
         <div>
           <h2 className="text-xl font-bold mb-4">Donum</h2>

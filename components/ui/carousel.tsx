@@ -86,7 +86,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
           }}
         >
           <Image
-            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            className="absolute inset-0 w-[100%] h-[100%] object-contain opacity-100 transition-opacity duration-600 ease-in-out"
             style={{ opacity: current === index ? 1 : 0.5 }}
             width={200}
             height={200}
@@ -101,7 +101,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
         </div>
 
         {expanded ? (
-          <article className="absolute inset-0 z-20 flex flex-col justify-between bg-black/70 text-white p-6 rounded-lg">
+          <article className="absolute inset-0 z-20 flex flex-col justify-between bg-black/70 text-white p-6 rounded-lg  overflow-auto">
             <motion.div
               className="text-left"
               initial={{ opacity: 0, y: 20 }}
@@ -213,7 +213,7 @@ export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
   return (
     <div
       ref={carouselRef}
-      className="relative min-w-full h-11/12 flex items-center pt-14 overflow-x-auto scrollbar-hide"
+      className="relative min-w-full h-11/12 flex z-[999999999] items-center pt-14 pl-8 overflow-x-auto scrollbar-hide"
       aria-labelledby={`carousel-heading-${id}`}
       onWheel={handleWheel}
     >

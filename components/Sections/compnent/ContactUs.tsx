@@ -39,7 +39,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="w-full py-12 text-white flex flex-col z-10">
+    <div className="w-full py-12 text-white flex flex-col z-50">
       <ToastContainer position="top-center" theme="colored" />
 
       <div className="w-full max-w-4xl mx-auto px-4 flex flex-col">

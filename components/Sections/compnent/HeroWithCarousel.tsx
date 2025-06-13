@@ -46,7 +46,7 @@ export default function HeroWithCarousel({
       {carouselOpen && (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-[99999] pointer-events-auto">
           <button
-            className="absolute top-4 right-4 text-white text-3xl z-[99999]"
+            className="absolute top-4 right-4 text-white text-3xl flex z-[99999999999999999999999999]"
             onClick={() => setCarouselOpen(false)}
           >
             &times;

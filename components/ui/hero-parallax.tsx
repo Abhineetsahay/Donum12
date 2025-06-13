@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
   // MotionValue,
-  useMotionValueEvent,
 } from "motion/react";
 import Image from "next/image";
 import clsx from "clsx";
@@ -59,20 +58,10 @@ export const HeroParallax = ({
     springConfig
   );
 
-  
-  const [isScrollable, setIsScrollable] = useState(false);
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (value >= 0.2) {
-      setIsScrollable(true);
-    } else {
-      setIsScrollable(false);
-    }
-  });
   return (
     <div
       ref={ref}
-      className="min-h-[250vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[250vh] py-16 sm:py-24 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -86,10 +75,7 @@ export const HeroParallax = ({
       >
         <motion.div
           className={clsx(
-            "flex gap-20 transition-all duration-1000",
-            isScrollable
-              ? "overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
-              : "overflow-hidden"
+            "flex gap-6 sm:gap-10 md:gap-20 transition-all duration-1000 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
           )}
         >
           {firstRow.map((product, i) => (
@@ -166,17 +152,16 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-[30rem] relative shrink-0"
+      className="group/product h-96 w-64 sm:w-96 md:w-[25rem] relative shrink-0"
     >
       <Image
         src={product.thumbnail}
-        height={600}
-        width={600}
-        className="object-cover object-left-top absolute h-full w-full inset-0 cursor-pointer"
+        className="object-contain object-left-top absolute h-full w-full inset-0 cursor-pointer"
+        fill
         alt={product.title}
         onClick={onClick}
       />
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-90 bg-black/80 backdrop-blur-sm pointer-events-none transition-opacity duration-300"></div>
+      {/* <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-90 bg-black/80 backdrop-blur-sm pointer-events-none transition-opacity duration-300"></div> */}
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white text-xl font-semibold drop-shadow-lg transition-opacity duration-300">
         {product.title}
       </h2>

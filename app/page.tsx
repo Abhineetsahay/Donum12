@@ -37,7 +37,7 @@ function MainContent() {
       <Products productRef={productRef} />
       <FAQ />
       <Testimonals />
-      <UserForms/>
+      <UserForms />
       <Footer contactRef={contactRef} />
     </div>
   );
