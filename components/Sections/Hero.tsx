@@ -4,8 +4,13 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import donum_logo from "@/public/donum_logo.png";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
+import Link from "next/link";
 
-export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | null> }) => {
+export const Hero = ({
+  homeRef,
+}: {
+  homeRef: React.RefObject<HTMLDivElement | null>;
+}) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [animationDone, setAnimationDone] = useState(false);
   const { scrollYProgress } = useScroll({
@@ -22,9 +27,9 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (v) => {
-      if (v >= 0.95 && !animationDone) {
+      if (v >= 0.90 && !animationDone) {
         setAnimationDone(true);
-      } 
+      }
     });
     return () => unsubscribe();
   }, [scrollYProgress, animationDone]);
@@ -37,8 +42,7 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
       ref={setRefs}
       className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-28 md:px-12"
     >
-      <div 
-      className="overflow-hidden w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
+      <div className="overflow-hidden w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
         <div className="absolute w-full h-full blur-2xl rounded-full z-0 animate-pulse"></div>
         <Image
           src={donum_logo}
@@ -49,9 +53,7 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
           priority
         />
       </div>
-      <div
-        className="w-full md:w-1/2 min-h-[350px] flex items-center justify-center md:h-screen top-0 self-start relative"
-      >
+      <div className="w-full md:w-1/2 min-h-[350px] flex flex-col items-center justify-center md:h-screen top-0 self-start relative">
         <AnimatePresence mode="wait">
           {!animationDone ? (
             <motion.div
@@ -78,7 +80,7 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col items-center justify-center text-center w-full h-full px-2 md:px-8"
+              className="flex flex-col z-[15] items-center justify-center text-center w-full h-full px-2 md:px-8"
             >
               <div className="h-[52vh] flex flex-col items-center justify-start">
                 <motion.h2
@@ -109,6 +111,13 @@ export const Hero = ({ homeRef }: { homeRef: React.RefObject<HTMLDivElement | nu
                     className="text-base sm:text-lg font-semibold italic text-white text-left"
                   />
                 </motion.div>
+                <Link
+                  href="https://www.instagram.com/_.donum/"
+                  target="_blank"
+                  className="inline-block mt-8 px-6 py-3 bg-[#23243a] text-white border-2 border-white rounded-lg font-semibold shadow-md hover:bg-[#35365a] transition-colors duration-200"
+                >
+                  Purchase Product
+                </Link>
               </div>
             </motion.div>
           )}

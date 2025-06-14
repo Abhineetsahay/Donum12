@@ -1,10 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
+import donum_logo from "@/public/donum_logo.png";
 export const LoadingScreen = () => {
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0a0a23]">
+    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-5 bg-[#0a0a23]">
       <motion.div
         initial={{ opacity: 0.6, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1.05 }}
@@ -22,6 +24,17 @@ export const LoadingScreen = () => {
       >
         Loading Donum<span className="animate-pulse">...</span>
       </motion.div>
+      <div className="relative flex items-center justify-center mt-6">
+        <div className="absolute w-48 h-48 md:w-64 md:h-64 bg-[#00B4DB] opacity-30 blur-2xl rounded-full z-0 animate-pulse"></div>
+        <Image
+          src={donum_logo}
+          alt="Donum Logo"
+          width={220}
+          height={220}
+          className="rounded-b-full object-contain relative z-10 shadow-lg"
+          priority
+        />
+      </div>
     </div>
   );
 };

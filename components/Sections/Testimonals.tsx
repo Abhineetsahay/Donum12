@@ -63,15 +63,14 @@ const Testimonals = () => {
   }));
 
   return (
-    // <motion.section
-    //   initial="hidden"
-    //   whileInView="visible"
-    //   viewport={{ once: true, amount: 0.2 }}
-    //   variants={revealVariant}
-    //   custom={0}
-    //   className="z-10"
-    // >
-    <>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={revealVariant}
+      custom={0}
+      className="mb-8 p-6"
+    >
       <motion.h2
         variants={revealVariant}
         custom={0.1}
@@ -79,15 +78,14 @@ const Testimonals = () => {
       >
         What Our Customers Say
       </motion.h2>
-      <div className="h-[40rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
+      <div className="mb-8 rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
         <InfiniteMovingCards
           items={movingCardsItems}
           direction="right"
-          speed="fast"
+          speed="normal"
         />
       </div>
-      </>
-    // </motion.section>
+     </motion.section>
   );
 };
 

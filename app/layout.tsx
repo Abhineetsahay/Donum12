@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Donum",
-  description: "Create what you love",
+  description: "You Dream it, We'll make it",
 };
 
 export default function RootLayout({

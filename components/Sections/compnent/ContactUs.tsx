@@ -39,7 +39,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="w-full py-12 text-white flex flex-col z-50">
+    <div className="w-full pb-12 text-white flex flex-col z-50">
       <ToastContainer position="top-center" theme="colored" />
 
       <div className="w-full max-w-4xl mx-auto px-4 flex flex-col">
@@ -47,7 +47,6 @@ const ContactUs = () => {
         
 
         <div className="mt-8 bg-[#101033] p-6 rounded-lg shadow w-full">
-        <h3 className="text-xl font-semibold text-white mb-4 opacity-0">------</h3>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
             <div>
               <label htmlFor="userName" className="block text-sm font-medium text-gray-300">Name</label>
