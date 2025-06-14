@@ -101,7 +101,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
         </div>
 
         {expanded ? (
-          <article className="absolute inset-0 z-20 flex flex-col justify-between bg-black/70 text-white p-6 rounded-lg  overflow-auto">
+          <article className="absolute inset-0 z-20 flex flex-col justify-between bg-black/70 text-white p-6 rounded-lg  overflow-auto scrollbar-hide">
             <motion.div
               className="text-left"
               initial={{ opacity: 0, y: 20 }}
