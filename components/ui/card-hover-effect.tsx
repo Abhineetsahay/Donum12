@@ -20,7 +20,7 @@ export const HoverEffect = ({
   isHero: boolean;
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set()); 
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   const toggleDescription = (id: string) => {
     setExpanded((prev) => {
@@ -37,7 +37,7 @@ export const HoverEffect = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-12",
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-12",
         className
       )}
     >
@@ -69,11 +69,7 @@ export const HoverEffect = ({
 
           <Card className="relative z-10">
             <div className="relative w-full h-48 rounded-lg overflow-hidden">
-              <Link
-                href={item.imageUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href={item.imageUrl}>
                 <Image
                   src={item.imageUrl}
                   alt={item.name}
@@ -94,8 +90,13 @@ export const HoverEffect = ({
             >
               <Carddescription>
                 {isHero || expanded.has(item.id) ? (
-                  <>
-                    {item.description}{" "}
+                  <div className="overflow-auto">
+                    <div className="mb-6 break-words whitespace-pre-line flex flex-col gap-1.5">
+                      {/* <span className="text-[20px] font-bold">
+                        Description:-
+                      </span> */}
+                      {item.description}
+                    </div>
                     {!isHero && (
                       <button
                         onClick={() => toggleDescription(item.id)}
@@ -104,7 +105,7 @@ export const HoverEffect = ({
                         See Less
                       </button>
                     )}
-                  </>
+                  </div>
                 ) : (
                   <>
                     {item.description.slice(0, 100)}...{" "}
@@ -135,11 +136,11 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-3xl p-6 overflow-hidden bg-[#0a0a23] border border-slate-700 shadow-md transition-all duration-300 hover:shadow-2xl",
+        "rounded-3xl p-6 bg-[#0a0a23] border border-slate-700 shadow-md transition-all duration-300 hover:shadow-2xl h-[400px] flex flex-col overflow-y-auto scrollbar-hide",
         className
       )}
     >
-      <div>{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 };
@@ -173,7 +174,7 @@ export const Carddescription = ({
   return (
     <p
       className={cn(
-        "mt-2 text-slate-400 tracking-wide leading-relaxed text-sm break-words",
+        "mt-2 text-slate-400 tracking-wide leading-relaxed text-sm break-words pr-2",
         className
       )}
     >

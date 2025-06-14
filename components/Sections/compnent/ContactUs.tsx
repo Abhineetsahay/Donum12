@@ -23,6 +23,19 @@ const ContactUs = () => {
     formState: { errors, isSubmitting },
   } = useForm<ContactUsData>();
 
+  const validateEmailOrPhone = (value: string) => {
+    // Email regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Phone regex pattern (allows formats like: +1234567890, 1234567890, 123-456-7890)
+    const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+    if (!value) return "Email or phone number is required";
+    if (!emailPattern.test(value) && !phonePattern.test(value)) {
+      return "Please enter a valid email or phone number";
+    }
+    return true;
+  };
+
   const onSubmit = async (data: ContactUsData) => {
     try {
       await push(ref(db, "CustomerQuery"), {
@@ -62,10 +75,13 @@ const ContactUs = () => {
             </div>
 
             <div>
-              <label htmlFor="userEmail" className="block text-sm font-medium text-gray-300">Email</label>
+              <label htmlFor="userEmail" className="block text-sm font-medium text-gray-300">Email / Phone (For Faster Response)</label>
               <Input
                 id="userEmail"
-                {...register("userEmail", { required: "Your name is required" })}
+                {...register("userEmail", { 
+                  required: "Email or phone number is required",
+                  validate: validateEmailOrPhone
+                })}
                 className="mt-1 bg-gray-700 text-white border-gray-600"
               />
               {errors.userEmail && (

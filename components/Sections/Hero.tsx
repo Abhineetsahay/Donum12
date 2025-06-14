@@ -114,9 +114,9 @@ export const Hero = ({
                 <Link
                   href="https://www.instagram.com/_.donum/"
                   target="_blank"
-                  className="inline-block mt-8 px-6 py-3 bg-[#23243a] text-white border-2 border-white rounded-lg font-semibold shadow-md hover:bg-[#35365a] transition-colors duration-200"
+                  className="inline-block mt-8 px-6 py-3 bg-indigo-600 text-white border-2 border-white rounded-lg font-semibold shadow-md hover:bg-[#35365a] transition-colors duration-200"
                 >
-                  Purchase Product
+                  BUY NOW
                 </Link>
               </div>
             </motion.div>

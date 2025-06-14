@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import clsx from "clsx";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export const HeroParallax = ({
   products,
@@ -25,6 +26,8 @@ export const HeroParallax = ({
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
   const ref = React.useRef(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isSmallScreen = useMediaQuery("(max-width: 640px)");
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -54,14 +57,14 @@ export const HeroParallax = ({
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    useTransform(scrollYProgress, [0, 0.2], [-400, isSmallScreen ? 500 : isMobile ? 400 : 300]),
     springConfig
   );
 
   return (
     <div
       ref={ref}
-      className="min-h-[250vh] py-16 sm:py-24 md:py-40 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[200vh] md:min-h-[210vh] py-12 sm:py-18 md:py-30 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -117,7 +120,7 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
+    <div className="max-w-7xl relative mx-auto py-16 md:py-36 px-4 w-full left-0 top-0">
       <h1 className="text-3xl md:text-7xl font-bold text-white drop-shadow-lg">
         The 3D <br /> Printing
       </h1>
@@ -152,7 +155,7 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-64 sm:w-96 md:w-[25rem] relative shrink-0"
+      className="group/product h-96 w-64 sm:w-96 md:w-[30rem] relative shrink-0"
     >
       <Image
         src={product.thumbnail}

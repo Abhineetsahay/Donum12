@@ -69,7 +69,7 @@ const Testimonals = () => {
       viewport={{ once: true, amount: 0.2 }}
       variants={revealVariant}
       custom={0}
-      className="mb-8 p-6"
+      className="mb-8 p-6 z-[15]"
     >
       <motion.h2
         variants={revealVariant}
