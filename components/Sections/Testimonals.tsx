@@ -37,7 +37,7 @@ const Testimonals = () => {
     const recentReviewsQuery = query(
       reviewsRef,
       orderByChild("createdAt"),
-      limitToLast(8)
+      limitToLast(10)
     );
 
     const unsubscribe = onValue(recentReviewsQuery, (snapshot) => {
