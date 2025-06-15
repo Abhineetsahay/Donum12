@@ -78,7 +78,7 @@ export const HeroParallax = ({
       >
         <motion.div
           className={clsx(
-            "flex gap-6 sm:gap-10 md:gap-20 transition-all duration-1000 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
+            "flex gap-4 sm:gap-6 md:gap-8 transition-all duration-1000 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
           )}
         >
           {firstRow.map((product, i) => (
