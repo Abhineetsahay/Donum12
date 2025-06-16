@@ -67,7 +67,7 @@ export function HomeNavbar({
               />
             </div>
             <div className="w-full h-full flex flex-row-reverse items-center justify-center">
-              <div className="flex flex-col items-center justify-center gap-5">
+              <div className="flex flex-col items-center justify-center gap-4">
                 {navItems.map((item, idx) => (
                   <button
                     key={`mobile-link-${idx}`}
@@ -77,7 +77,7 @@ export function HomeNavbar({
                     }}
                     className="relative text-left w-full px-4 py-2 text-neutral-200 hover:text-slate-400/80 cursor-pointer"
                   >
-                    <span className="block text-5xl">{item.name}</span>
+                    <span className="block text-4xl">{item.name}</span>
                   </button>
                 ))}
               </div>

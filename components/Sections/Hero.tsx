@@ -27,7 +27,7 @@ export const Hero = ({
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (v) => {
-      if (v >= 0.90 && !animationDone) {
+      if (v >= 0.9 && !animationDone) {
         setAnimationDone(true);
       }
     });
@@ -40,9 +40,9 @@ export const Hero = ({
   return (
     <section
       ref={setRefs}
-      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-visible px-4 py-28 md:px-12"
+      className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-hidden px-4 pt-20 pb-14 md:px-12"
     >
-      <div className="overflow-hidden w-64 h-64 md:w-96 md:h-96 flex items-center justify-center relative mb-8 md:mb-0">
+      <div className="overflow-hidden w-48 h-48 md:w-96 md:h-96 flex items-center justify-center relative mb-8 pt-8 md:mb-0">
         <div className="absolute w-full h-full blur-2xl rounded-full z-0 animate-pulse"></div>
         <Image
           src={donum_logo}
@@ -53,7 +53,7 @@ export const Hero = ({
           priority
         />
       </div>
-      <div className="w-full md:w-1/2 min-h-[350px] flex flex-col items-center justify-center md:h-screen top-0 self-start relative">
+      <div className="w-full md:w-1/2 min-h-[300px] md:min-h-[350px] flex flex-col items-center justify-center md:h-screen top-0 self-start relative">
         <AnimatePresence mode="wait">
           {!animationDone ? (
             <motion.div
@@ -64,7 +64,7 @@ export const Hero = ({
               transition={{ duration: 0.6 }}
               className="flex flex-col items-center justify-center text-center w-full h-full px-2 md:px-8"
             >
-              <div className="h-[52vh] flex flex-col items-center justify-start">
+              <div className="min-h-[300px] md:min-h-[350px] flex flex-col items-center justify-start">
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-6 text-left">
                   <TextGenerateEffect words={words} />
                 </h1>
@@ -82,12 +82,12 @@ export const Hero = ({
               transition={{ duration: 0.6 }}
               className="flex flex-col z-[15] items-center justify-center text-center w-full h-full px-2 md:px-8"
             >
-              <div className="h-[52vh] flex flex-col items-center justify-start">
+              <div className="min-h-[300px] md:min-h-[350px] flex flex-col items-center justify-start">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl sm:text-4xl font-bold text-white mb-4"
+                  className="text-2xl sm:text-3xl font-bold text-white mb-4"
                 >
                   Why Donum?
                 </motion.h2>
@@ -95,11 +95,17 @@ export const Hero = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-base sm:text-lg leading-relaxed text-white mb-6 text-left"
+                  className="text-base lg:text-lg leading-relaxed text-white mb-6 text-left"
                 >
-                  Tired of gifting (and receiving!) the same old thing? Donum!
-                  Create custom initial keychains, boxes, necklaces, statues,
-                  and many more unique, personalized gifts they&apos;ll love.
+                  For individuals who need quality, affordable items delivered
+                  on time with a smooth and satisfying purchase experience,
+                  Donum is a personalized gifting brand that customizes your
+                  gifts to add deep meaning, ensuring that the recipient never
+                  forgets the gift — or how much they mean to you. And unlike
+                  online marketplaces that offer expensive, mass-produced
+                  products, Donum is a better choice since we can customize
+                  virtually anything you dream of — from unique keychains to
+                  glow-in-the-dark photos.
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -107,7 +113,7 @@ export const Hero = ({
                   transition={{ delay: 0.6 }}
                 >
                   <TextGenerateEffect
-                    words="Something special is coming soon... 😉 Start creating today!"
+                    words="You Dream It, and We'll Make It."
                     className="text-base sm:text-lg font-semibold italic text-white text-left"
                   />
                 </motion.div>
