@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  // MotionValue,
-} from "motion/react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -25,48 +19,68 @@ export const HeroParallax = ({
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
+
   const ref = React.useRef(null);
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isSmallScreen = useMediaQuery("(max-width: 640px)");
+  const [containerHeight, setContainerHeight] = React.useState(0);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
+  React.useEffect(() => {
+    const updateHeight = () => {
+      if (ref.current) {
+        const height = window.innerHeight;
+        setContainerHeight(height);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  // const translateX = useSpring(
-  //   useTransform(scrollYProgress, [0, 1], [0, 400]),
-  //   springConfig
-  // );
-  // const translateXReverse = useSpring(
-  //   useTransform(scrollYProgress, [0, 1], [0, -400]),
-  //   springConfig
-  // );
-
+  // Rotate and opacity
   const rotateX = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
-  );
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
     springConfig
   );
   const rotateZ = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [20, 0]),
     springConfig
   );
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    springConfig
+  );
+
+  const isSmallScreen = useMediaQuery("(max-width: 639px)");
+  
+  const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
+  let translateEndY=0.75
+
+  if(isSmallScreen) translateEndY=0.7
+  if(isVerySmallScreen) translateEndY=0.35
+
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-400, isSmallScreen ? 500 : isMobile ? 400 : 300]),
+    useTransform(
+      scrollYProgress,
+      [0, 0.2],
+      [-containerHeight * 0.6, containerHeight * translateEndY ]
+    ),
     springConfig
   );
 
   return (
     <div
       ref={ref}
-      className="min-h-[200vh] md:min-h-[210vh] py-12 sm:py-18 md:py-30 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[225vh] md:min-h-[250vh] py-6 sm:py-18 md:py-20 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
+
       <motion.div
         style={{
           rotateX,
@@ -74,7 +88,6 @@ export const HeroParallax = ({
           translateY,
           opacity,
         }}
-        className=""
       >
         <motion.div
           className={clsx(
@@ -83,32 +96,26 @@ export const HeroParallax = ({
         >
           {firstRow.map((product, i) => (
             <ProductCard
-              product={product}
-              // translate={translateX}
               key={product.title}
-              onClick={() => onProductClick && onProductClick(i)}
+              product={product}
+              onClick={() => onProductClick?.(i)}
             />
           ))}
 
           {secondRow.map((product, i) => (
             <ProductCard
-              product={product}
-              // translate={translateXReverse}
               key={product.title}
-              onClick={() =>
-                onProductClick && onProductClick(i + firstRow.length)
-              }
+              product={product}
+              onClick={() => onProductClick?.(i + firstRow.length)}
             />
           ))}
 
           {thirdRow.map((product, i) => (
             <ProductCard
-              product={product}
-              // translate={translateX}
               key={product.title}
+              product={product}
               onClick={() =>
-                onProductClick &&
-                onProductClick(i + firstRow.length + secondRow.length)
+                onProductClick?.(i + firstRow.length + secondRow.length)
               }
             />
           ))}
@@ -120,22 +127,45 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-16 md:py-36 px-4 w-full left-0 top-0">
+    <div className="max-w-7xl relative mx-auto px-4 w-full left-0 top-9">
       <h1 className="text-3xl md:text-7xl font-bold text-white drop-shadow-lg">
-        The 3D <br /> Printing
+        Stop Giving Boring Gifts.
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 text-gray-300 drop-shadow">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
-      </p>
+      <div className="max-w-2xl text-base md:text-xl mt-8 text-gray-300 drop-shadow mb-6 break-words whitespace-pre-line">
+        <p className="mb-3 leading-relaxed">
+          The world has enough mass-produced stuff. Your people are
+          one-of-a-kind, and their gifts should be too. Donum is where your
+          unique ideas become high-quality, custom-made treasures.
+        </p>
+        <p className="mb-3 leading-relaxed">Why Settle for the Shelf?</p>
+        <p className="mb-3 leading-relaxed">
+          Online marketplaces offer you their products. We help you create your
+          product. They sell what&apos;s popular. You tell a personal story.
+          They focus on price. We focus on meaning, with affordability built-in.
+        </p>
+        <p className="mb-3 leading-relaxed">
+          Our Motto is Our Process: You Dream It, We&apos;ll Make It.
+        </p>
+        <p className="mb-3 leading-relaxed">
+          Seriously, anything. That inside joke about a glowing pickle? We can
+          make it a keychain. A custom soundwave engraving of you saying &quot;I
+          love you&quot;? We&apos;ll figure it out.
+        </p>
+        <p className="mb-3 leading-relaxed">
+          Tell Us Your Vision: No matter how simple or wild. We Bring It To
+          Life: With quality materials and craftsmanship. Delivered On Time: For
+          a seamless and happy purchase experience.
+        </p>
+        <p className="leading-relaxed">
+          Don&apos;t just give a gift. Give a story.
+        </p>
+      </div>
     </div>
   );
 };
 
 export const ProductCard = ({
   product,
-  // translate,
   onClick,
 }: {
   product: {
@@ -143,17 +173,11 @@ export const ProductCard = ({
     link: string;
     thumbnail: string;
   };
-  // translate: MotionValue<number>;
   onClick?: () => void;
 }) => {
   return (
     <motion.div
-      style={{
-        // x: translate,
-      }}
-      whileHover={{
-        y: -20,
-      }}
+      whileHover={{ y: -20 }}
       key={product.title}
       className="group/product h-96 w-64 sm:w-96 md:w-[30rem] relative shrink-0"
     >
@@ -164,7 +188,6 @@ export const ProductCard = ({
         alt={product.title}
         onClick={onClick}
       />
-      {/* <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-90 bg-black/80 backdrop-blur-sm pointer-events-none transition-opacity duration-300"></div> */}
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white text-xl font-semibold drop-shadow-lg transition-opacity duration-300">
         {product.title}
       </h2>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export const HoverEffect = ({
   items,
   className,
@@ -92,9 +93,6 @@ export const HoverEffect = ({
                 {isHero || expanded.has(item.id) ? (
                   <div className="overflow-auto">
                     <div className="mb-6 break-words whitespace-pre-line flex flex-col gap-1.5">
-                      {/* <span className="text-[20px] font-bold">
-                        Description:-
-                      </span> */}
                       {item.description}
                     </div>
                     {!isHero && (
