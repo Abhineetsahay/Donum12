@@ -21,7 +21,7 @@ const BackgroundAnimation = ({ minDelay = 1.5 }: BackgroundAnimationProps) => {
             left: `${Math.random() * 80 + 10}%`,
             zIndex: 0,
           }}
-          animate={{ y: [0, -80, 0], opacity: [0.4, 0.6, 0.4] }}
+          animate={{ y: [0, 100, 120, 0], opacity: [0.4, 0.6, 0.4] }}
           transition={{
             duration: 6 + Math.random() * 3,
             repeat: Infinity,

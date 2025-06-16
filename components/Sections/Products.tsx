@@ -23,58 +23,28 @@ interface Product {
 
 export const Products = ({
   productRef,
+  onLoadingChange,
+  heroProducts,
+  normalProducts,
 }: {
   productRef: React.RefObject<HTMLDivElement | null>;
+  onLoadingChange?: (isLoading: boolean) => void;
+  heroProducts: Product[];
+  normalProducts: Product[];
 }) => {
-  const [heroProducts, setHeroProducts] = useState<Product[]>([]);
-  const [normalProducts, setNormalProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        // Fetch hero products
-        const heroResponse = await fetch('/api/products/hero');
-        if (!heroResponse.ok) {
-          throw new Error('Failed to fetch hero products');
-        }
-        const heroData = await heroResponse.json();
-        setHeroProducts(heroData.products);
-
-        // Fetch normal products
-        const normalResponse = await fetch('/api/products/normal');
-        if (!normalResponse.ok) {
-          throw new Error('Failed to fetch normal products');
-        }
-        const normalData = await normalResponse.json();
-        setNormalProducts(normalData.products);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch products');
-        console.error('Error fetching products:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+    if (heroProducts.length > 0 || normalProducts.length > 0) {
+      setIsLoading(false);
+      onLoadingChange?.(false);
+    }
+  }, [heroProducts, normalProducts, onLoadingChange]);
 
   if (isLoading) {
     return (
       <div className="w-full h-full pt-6 md:pt-10 pb-10 md:pb-20 px-4 md:px-8 flex flex-col items-center justify-center">
         <div className="text-white text-xl">Loading products...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="w-full h-full pt-6 md:pt-10 pb-10 md:pb-20 px-4 md:px-8 flex flex-col items-center justify-center">
-        <div className="text-red-500 text-xl">{error}</div>
       </div>
     );
   }
@@ -90,9 +60,6 @@ export const Products = ({
       className="w-full h-full mt-4 sm:mt-8 pt-8 sm:pt-16 pb-6 sm:pb-10 md:pb-20 px-2 sm:px-4 md:px-8 flex flex-col relative"
     >
       <div className="mt-4 sm:mt-6 md:mt-14 flex flex-col relative z-30">
-        <h6 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-4 sm:mb-6 md:mb-10 text-center">
-          Customized Products
-        </h6>
         {heroProducts.length > 0 ? (
           <div className="relative z-30">
             <HeroWithCarousel products={heroProducts} />
@@ -101,12 +68,12 @@ export const Products = ({
           <div className="text-white text-center">No customized products available</div>
         )}
       </div>
-      <div className="flex flex-col relative z-30 mt-6 sm:mt-8 md:mt-12">
+      <div className="flex flex-col relative z-20 mt-6 sm:mt-8 md:mt-12">
         <h6 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold mb-4 sm:mb-6 md:mb-8 text-center">
           Other Products
         </h6>
         {normalProducts.length > 0 ? (
-          <div className="relative z-30">
+          <div className="relative z-20">
             <HoverEffect items={normalProducts} isHero={false} />
           </div>
         ) : (

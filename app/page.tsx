@@ -11,7 +11,23 @@ import BackgroundAnimation from "@/components/BackgroundAnimation";
 import Testimonals from "@/components/Sections/Testimonals";
 import UserForms from "@/components/Sections/UserForms";
 
-function MainContent() {
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+}
+
+function MainContent({ 
+  onProductsLoadingChange,
+  heroProducts,
+  normalProducts,
+}: { 
+  onProductsLoadingChange: (loading: boolean) => void;
+  heroProducts: Product[];
+  normalProducts: Product[];
+}) {
   const { carouselOpen } = useCarousel();
   const homeRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
@@ -34,7 +50,12 @@ function MainContent() {
       )}
       <Hero homeRef={homeRef} />
       <BackgroundAnimation />
-      <Products productRef={productRef} />
+      <Products 
+        productRef={productRef} 
+        onLoadingChange={onProductsLoadingChange}
+        heroProducts={heroProducts}
+        normalProducts={normalProducts}
+      />
       <FAQ />
       <Testimonals />
       <UserForms />
@@ -45,6 +66,10 @@ function MainContent() {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isProductsLoading, setIsProductsLoading] = useState(true);
+  const [heroProducts, setHeroProducts] = useState<Product[]>([]);
+  const [normalProducts, setNormalProducts] = useState<Product[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -53,11 +78,45 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, []);
 
-  if (isLoading) return <LoadingScreen />;
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setIsProductsLoading(true);
+      setError(null);
+
+      try {
+        const heroResponse = await fetch('/api/products/hero');
+        if (!heroResponse.ok) {
+          throw new Error('Failed to fetch hero products');
+        }
+        const heroData = await heroResponse.json();
+        setHeroProducts(heroData.products);
+
+        const normalResponse = await fetch('/api/products/normal');
+        if (!normalResponse.ok) {
+          throw new Error('Failed to fetch normal products');
+        }
+        const normalData = await normalResponse.json();
+        setNormalProducts(normalData.products);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch products');
+        console.error('Error fetching products:', err);
+      } finally {
+        setIsProductsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (isLoading || isProductsLoading) return <LoadingScreen />;
 
   return (
     <CarouselProvider>
-      <MainContent />
+      <MainContent 
+        onProductsLoadingChange={setIsProductsLoading}
+        heroProducts={heroProducts}
+        normalProducts={normalProducts}
+      />
     </CarouselProvider>
   );
 }

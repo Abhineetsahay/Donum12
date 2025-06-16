@@ -7,7 +7,6 @@ export const InfiniteMovingCards = ({
   items,
   direction = "left",
   speed = "fast",
-  pauseOnHover = true,
   className,
 }: {
   items: {
@@ -17,15 +16,23 @@ export const InfiniteMovingCards = ({
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
-  pauseOnHover?: boolean;
   className?: string;
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [start, setStart] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     setStart(true);
   }, []);
+
+  const handleInteractionStart = () => {
+    setIsPaused(true);
+  };
+
+  const handleInteractionEnd = () => {
+    setIsPaused(false);
+  };
 
   return (
     <div
@@ -39,7 +46,7 @@ export const InfiniteMovingCards = ({
         className={cn(
           "flex w-max min-w-full shrink-0 flex-nowrap gap-4 py-4",
           start && "animate-scroll",
-          pauseOnHover && "hover:[animation-play-state:paused]",
+          isPaused && "[animation-play-state:paused]"
         )}
         style={{
           animationDuration: speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s",
@@ -48,11 +55,17 @@ export const InfiniteMovingCards = ({
           animationDirection: direction === "left" ? "normal" : "reverse",
         }}
       >
-        {/* First set of items */}
         {items.map((item, idx) => (
           <div
             className="relative w-[350px] max-w-full shrink-0 rounded-2xl bg-[#18182a] shadow-md px-8 py-6 md:w-[450px] text-white"
             key={`first-${idx}`}
+            onMouseEnter={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
+            onTouchStart={handleInteractionStart}
+            onTouchEnd={handleInteractionEnd}
+            onFocus={handleInteractionStart}
+            onBlur={handleInteractionEnd}
+            tabIndex={0}
           >
             <blockquote>
               <div
@@ -77,6 +90,13 @@ export const InfiniteMovingCards = ({
           <div
             className="relative w-[350px] max-w-full shrink-0 rounded-2xl bg-[#18182a] shadow-md px-8 py-6 md:w-[450px] text-white"
             key={`second-${idx}`}
+            onMouseEnter={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
+            onTouchStart={handleInteractionStart}
+            onTouchEnd={handleInteractionEnd}
+            onFocus={handleInteractionStart}
+            onBlur={handleInteractionEnd}
+            tabIndex={0}
           >
             <blockquote>
               <div

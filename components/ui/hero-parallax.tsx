@@ -37,8 +37,8 @@ export const HeroParallax = ({
     };
 
     updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
@@ -59,10 +59,10 @@ export const HeroParallax = ({
 
   const isMediumScreen = useMediaQuery("(min-width: 1024px)");
   // const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
-  
-  let translateEndY=0.1
 
-  if(isMediumScreen) translateEndY=0.385
+  let translateEndY = 0.1;
+
+  if (isMediumScreen) translateEndY = 0.25;
   // if(isVerySmallScreen) translateEndY=0.35
 
   const translateY = useSpring(
@@ -77,10 +77,21 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="min-h-[100vh] sm:min-h-[150vh] md:min-h-[200vh] py-4 sm:py-6 md:py-20 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[100vh] sm:min-h-[150vh] md:min-h-[200vh] py-4 sm:py-6 md:py-4 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
-
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="mt-4 sm:mt-8 md:mt-0 flex flex-col relative z-30"
+      >
+        <div>
+          <h6 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-4 sm:mt-8 md:mt-16 lg:mt-22  text-white font-bold mb-4 sm:mb-6 md:mb-4 lg:mb-0 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
+            Customized Products
+          </h6>
+        </div>
+      </motion.div>
       <motion.div
         style={{
           rotateX,
@@ -138,13 +149,15 @@ export const Header = () => {
           one-of-a-kind, and their gifts should be too. Donum is where your
           unique ideas become high-quality, custom-made treasures.
         </p>
-        <p className="mb-3 leading-relaxed">Why Settle for the Shelf?</p>
+        <p className="mb-3 leading-relaxed font-black">
+          Why Settle for the Shelf?
+        </p>
         <p className="mb-3 leading-relaxed">
           Online marketplaces offer you their products. We help you create your
           product. They sell what&apos;s popular. You tell a personal story.
           They focus on price. We focus on meaning, with affordability built-in.
         </p>
-        <p className="mb-3 leading-relaxed">
+        <p className="mb-3 leading-relaxed font-black">
           Our Motto is Our Process: You Dream It, We&apos;ll Make It.
         </p>
         <p className="mb-3 leading-relaxed">
@@ -153,11 +166,12 @@ export const Header = () => {
           love you&quot;? We&apos;ll figure it out.
         </p>
         <p className="mb-3 leading-relaxed">
-          Tell Us Your Vision: No matter how simple or wild. We Bring It To
-          Life: With quality materials and craftsmanship. Delivered On Time: For
-          a seamless and happy purchase experience.
+          <span className="font-extrabold">Tell Us Your Vision: </span>
+          No matter how simple or wild. We Bring It To Life: With quality
+          materials and craftsmanship. Delivered On Time: For a seamless and
+          happy purchase experience.
         </p>
-        <p className="leading-relaxed">
+        <p className="leading-relaxed font-black">
           Don&apos;t just give a gift. Give a story.
         </p>
       </div>
@@ -180,7 +194,7 @@ export const ProductCard = ({
     <motion.div
       whileHover={{ y: -20 }}
       key={product.title}
-      className="group/product h-64 sm:h-80 md:h-96 w-48 sm:w-64 md:w-96 lg:w-[30rem] relative shrink-0"
+      className="group/product h-64 sm:h-80 md:h-96 w-56 sm:w-64 md:w-96 lg:w-[30rem] relative shrink-0"
     >
       <Image
         src={product.thumbnail}
