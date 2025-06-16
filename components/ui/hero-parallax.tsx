@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useRef ,useEffect,useState} from "react";
 
 export const HeroParallax = ({
   products,
@@ -20,15 +21,15 @@ export const HeroParallax = ({
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
 
-  const ref = React.useRef(null);
-  const [containerHeight, setContainerHeight] = React.useState(0);
+  const ref =useRef(null);
+  const [containerHeight, setContainerHeight] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const updateHeight = () => {
       if (ref.current) {
         const height = window.innerHeight;

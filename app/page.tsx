@@ -70,7 +70,9 @@ export default function Home() {
   const [heroProducts, setHeroProducts] = useState<Product[]>([]);
   const [normalProducts, setNormalProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-
+  
+  console.log(error)
+  
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsLoading(false);
