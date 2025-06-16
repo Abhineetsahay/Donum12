@@ -38,7 +38,7 @@ export const HoverEffect = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-12",
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 py-6 sm:py-12 px-2 sm:px-4",
         className
       )}
     >
@@ -69,7 +69,7 @@ export const HoverEffect = ({
           </AnimatePresence>
 
           <Card className="relative z-10">
-            <div className="relative w-full h-48 rounded-lg overflow-hidden">
+            <div className="relative w-full h-36 sm:h-48 rounded-lg overflow-hidden">
               <Link href={item.imageUrl}>
                 <Image
                   src={item.imageUrl}
@@ -134,11 +134,11 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-3xl p-6 bg-[#0a0a23] border border-slate-700 shadow-md transition-all duration-300 hover:shadow-2xl h-[400px] flex flex-col overflow-y-auto scrollbar-hide",
+        "rounded-3xl p-4 sm:p-6 bg-[#0a0a23] border border-slate-700 shadow-md transition-all duration-300 hover:shadow-2xl h-[400px] flex flex-col overflow-y-auto scrollbar-hide",
         className
       )}
     >
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 flex flex-col">{children}</div>
     </div>
   );
 };
@@ -153,7 +153,7 @@ export const CardTitle = ({
   return (
     <h4
       className={cn(
-        "mt-4 text-slate-100 text-xl font-bold tracking-wide",
+        "mt-2 sm:mt-4 text-slate-100 text-lg sm:text-xl font-bold tracking-wide line-clamp-1",
         className
       )}
     >
@@ -172,7 +172,7 @@ export const Carddescription = ({
   return (
     <p
       className={cn(
-        "mt-2 text-slate-400 tracking-wide leading-relaxed text-sm break-words pr-2",
+        "mt-1 sm:mt-2 text-slate-400 tracking-wide leading-relaxed text-xs sm:text-sm break-words pr-2 line-clamp-3",
         className
       )}
     >

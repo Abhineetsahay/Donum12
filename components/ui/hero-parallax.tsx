@@ -57,19 +57,19 @@ export const HeroParallax = ({
     springConfig
   );
 
-  const isSmallScreen = useMediaQuery("(max-width: 639px)");
+  const isMediumScreen = useMediaQuery("(min-width: 1024px)");
+  // const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
   
-  const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
-  let translateEndY=0.75
+  let translateEndY=0.1
 
-  if(isSmallScreen) translateEndY=0.7
-  if(isVerySmallScreen) translateEndY=0.35
+  if(isMediumScreen) translateEndY=0.385
+  // if(isVerySmallScreen) translateEndY=0.35
 
   const translateY = useSpring(
     useTransform(
       scrollYProgress,
       [0, 0.2],
-      [-containerHeight * 0.6, containerHeight * translateEndY ]
+      [-containerHeight * 0.6, containerHeight * translateEndY]
     ),
     springConfig
   );
@@ -77,7 +77,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="min-h-[225vh] md:min-h-[250vh] py-6 sm:py-18 md:py-20 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
+      className="min-h-[100vh] sm:min-h-[150vh] md:min-h-[200vh] py-4 sm:py-6 md:py-20 overflow-hidden antialiased relative flex flex-col self-auto z-0 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
 
@@ -88,10 +88,11 @@ export const HeroParallax = ({
           translateY,
           opacity,
         }}
+        className="relative z-30"
       >
         <motion.div
           className={clsx(
-            "flex gap-4 sm:gap-6 md:gap-8 transition-all duration-1000 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
+            "flex gap-2 sm:gap-4 md:gap-8 transition-all duration-1000 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide px-2 sm:px-4 relative z-30"
           )}
         >
           {firstRow.map((product, i) => (
@@ -127,11 +128,11 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto px-4 w-full left-0 top-9">
-      <h1 className="text-3xl md:text-7xl font-bold text-white drop-shadow-lg">
+    <div className="max-w-7xl relative mx-auto px-2 sm:px-4 w-full left-0 top-4 sm:top-9">
+      <h1 className="text-2xl sm:text-3xl md:text-7xl font-bold text-white drop-shadow-lg">
         Stop Giving Boring Gifts.
       </h1>
-      <div className="max-w-2xl text-base md:text-xl mt-8 text-gray-300 drop-shadow mb-6 break-words whitespace-pre-line">
+      <div className="max-w-2xl text-sm sm:text-base md:text-xl mt-4 sm:mt-8 text-gray-300 drop-shadow mb-4 sm:mb-6 break-words whitespace-pre-line">
         <p className="mb-3 leading-relaxed">
           The world has enough mass-produced stuff. Your people are
           one-of-a-kind, and their gifts should be too. Donum is where your
@@ -179,7 +180,7 @@ export const ProductCard = ({
     <motion.div
       whileHover={{ y: -20 }}
       key={product.title}
-      className="group/product h-96 w-64 sm:w-96 md:w-[30rem] relative shrink-0"
+      className="group/product h-64 sm:h-80 md:h-96 w-48 sm:w-64 md:w-96 lg:w-[30rem] relative shrink-0"
     >
       <Image
         src={product.thumbnail}
@@ -188,7 +189,7 @@ export const ProductCard = ({
         alt={product.title}
         onClick={onClick}
       />
-      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white text-xl font-semibold drop-shadow-lg transition-opacity duration-300">
+      <h2 className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 opacity-0 group-hover/product:opacity-100 text-white text-base sm:text-xl font-semibold drop-shadow-lg transition-opacity duration-300">
         {product.title}
       </h2>
     </motion.div>
