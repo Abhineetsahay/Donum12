@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 export const HoverEffect = ({
   items,
   className,
@@ -69,7 +68,7 @@ export const HoverEffect = ({
           </AnimatePresence>
 
           <Card className="relative z-10">
-            <div className="relative w-full h-36 sm:h-48 rounded-lg overflow-hidden">
+            <div className="relative w-full h-full rounded-lg overflow-hidden">
               <Link href={item.imageUrl}>
                 <Image
                   src={item.imageUrl}
@@ -79,44 +78,46 @@ export const HoverEffect = ({
                 />
               </Link>
             </div>
-            <CardTitle>{item.name}</CardTitle>
-            <p className="mt-2 text-lg font-semibold text-slate-200">
-              ₹{item.price}
-            </p>
-            <motion.div
-              layout
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Carddescription>
-                {isHero || expanded.has(item.id) ? (
-                  <div className="overflow-auto">
-                    <div className="mb-6 break-words whitespace-pre-line flex flex-col gap-1.5">
-                      {item.description}
+            <div className="h-full flex flex-col justify-center">
+              <CardTitle>{item.name}</CardTitle>
+              <p className="mt-2 text-lg font-semibold text-slate-200">
+                ₹{item.price}
+              </p>
+              <motion.div
+                layout
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Carddescription>
+                  {isHero || expanded.has(item.id) ? (
+                    <div className="overflow-auto">
+                      <div className="mb-6 break-words whitespace-pre-line flex flex-col gap-1.5">
+                        {item.description}
+                      </div>
+                      {!isHero && (
+                        <button
+                          onClick={() => toggleDescription(item.id)}
+                          className="text-blue-500 font-semibold ml-1"
+                        >
+                          See Less
+                        </button>
+                      )}
                     </div>
-                    {!isHero && (
+                  ) : (
+                    <>
+                      {item.description.slice(0, 100)}...{" "}
                       <button
                         onClick={() => toggleDescription(item.id)}
                         className="text-blue-500 font-semibold ml-1"
                       >
-                        See Less
+                        See More
                       </button>
-                    )}
-                  </div>
-                ) : (
-                  <>
-                    {item.description.slice(0, 100)}...{" "}
-                    <button
-                      onClick={() => toggleDescription(item.id)}
-                      className="text-blue-500 font-semibold ml-1"
-                    >
-                      See More
-                    </button>
-                  </>
-                )}
-              </Carddescription>
-            </motion.div>
+                    </>
+                  )}
+                </Carddescription>
+              </motion.div>
+            </div>
           </Card>
         </div>
       ))}
