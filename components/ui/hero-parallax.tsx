@@ -88,7 +88,7 @@ export const HeroParallax = ({
         transition={{ duration: 0.8, delay: 0.3 }}
         className="mt-4 sm:mt-8 md:mt-0 flex flex-col relative z-30"
       >
-        <div>
+        <div className="mt-8">
           <h6 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-4 sm:mt-8 md:mt-16 lg:mt-22  text-white font-bold mb-2 sm:mb-4 md:mb-2 lg:mb-0 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
             Customized Products
           </h6>
