@@ -39,9 +39,9 @@ export const Footer = ({
           <h2 className="text-xl font-bold mb-4">Contact</h2>
           <p className="text-sm opacity-80">
             Email:
-            <a href="mailto:reach.donum@gmail.com" className="hover:text-blue-300">
+            <a href="mailto:thedonumstore@gmail.com" className="hover:text-blue-300">
               {" "}
-              reach.donum@gmail.com
+              thedonumstore@gmail.com
             </a>
           </p>
           <p className="text-sm opacity-80">
