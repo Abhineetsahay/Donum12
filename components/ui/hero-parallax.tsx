@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { useRef ,useEffect,useState} from "react";
+import { useRef, useEffect, useState } from "react";
 
 export const HeroParallax = ({
   products,
@@ -21,7 +21,7 @@ export const HeroParallax = ({
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
 
-  const ref =useRef(null);
+  const ref = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -59,12 +59,13 @@ export const HeroParallax = ({
   );
 
   const isMediumScreen = useMediaQuery("(min-width: 1024px)");
-  // const isVerySmallScreen = useMediaQuery("(max-width: 400px)");
+  
+  const isVerySmallScreen = useMediaQuery("(max-width: 640px)");
 
   let translateEndY = 0.1;
 
-  if (isMediumScreen) translateEndY = 0.25;
-  // if(isVerySmallScreen) translateEndY=0.35
+  if (isMediumScreen) translateEndY = 0.15;
+  if(isVerySmallScreen) translateEndY=0.075
 
   const translateY = useSpring(
     useTransform(
@@ -88,7 +89,7 @@ export const HeroParallax = ({
         className="mt-4 sm:mt-8 md:mt-0 flex flex-col relative z-30"
       >
         <div>
-          <h6 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-4 sm:mt-8 md:mt-16 lg:mt-22  text-white font-bold mb-4 sm:mb-6 md:mb-4 lg:mb-0 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
+          <h6 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-4 sm:mt-8 md:mt-16 lg:mt-22  text-white font-bold mb-2 sm:mb-4 md:mb-2 lg:mb-0 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
             Customized Products
           </h6>
         </div>
@@ -146,11 +147,11 @@ export const Header = () => {
       </h1>
       <div className="max-w-2xl text-sm sm:text-base md:text-xl mt-4 sm:mt-8 text-gray-300 drop-shadow mb-4 sm:mb-6 break-words whitespace-pre-line">
         <p className="mb-3 leading-relaxed">
-          The world has enough mass-produced stuff. Your people are
+          The world has enough mass-produced stuff. Your loved ones are
           one-of-a-kind, and their gifts should be too. Donum is where your
           unique ideas become high-quality, custom-made treasures.
         </p>
-        <p className="mb-3 leading-relaxed font-black">
+        <p className="mb-3 leading-relaxed font-black text-2xl">
           Why Settle for the Shelf?
         </p>
         <p className="mb-3 leading-relaxed">
@@ -158,7 +159,7 @@ export const Header = () => {
           product. They sell what&apos;s popular. You tell a personal story.
           They focus on price. We focus on meaning, with affordability built-in.
         </p>
-        <p className="mb-3 leading-relaxed font-black">
+        <p className="mb-3 leading-relaxed font-black text-2xl">
           Our Motto is Our Process: You Dream It, We&apos;ll Make It.
         </p>
         <p className="mb-3 leading-relaxed">
@@ -172,9 +173,10 @@ export const Header = () => {
           materials and craftsmanship. Delivered On Time: For a seamless and
           happy purchase experience.
         </p>
-        <p className="leading-relaxed font-black">
-          Don&apos;t just give a gift. Give a story.
-        </p>
+
+        <h1 className="text-xl sm:text-2xl md:text-6xl font-bold text-white drop-shadow-lg">
+          Don&apos;t just give a gift. Gift a story.
+        </h1>
       </div>
     </div>
   );
