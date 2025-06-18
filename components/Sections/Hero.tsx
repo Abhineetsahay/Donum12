@@ -34,15 +34,16 @@ export const Hero = ({
     return () => unsubscribe();
   }, [scrollYProgress, animationDone]);
 
-  const words =
-    "Crafting the future of jewelry with precision 3D printing technology";
+  const words =`Donum: Tired of gifts that say, "I Googled 'last-minute present'"? We're your secret weapon! Dream up anything - seriously, anything - and we'll craft a personalized masterpiece that screams, "You're awesome!" Get ready for some serious 'best gift ever' compliments.`;
+    // "Crafting the future of jewelry with precision 3D printing technology";
 
   return (
     <section
       ref={setRefs}
       className="relative min-h-screen flex flex-col md:flex-row items-center justify-center w-full overflow-hidden px-4 pt-20 pb-14 md:px-12"
     >
-      <div className="overflow-hidden w-48 h-48 md:w-96 md:h-96 flex items-center justify-center relative mb-8 pt-8 md:mb-0">
+      <div className="overflow-hidden w-48
+       h-48 md:w-96 md:h-96 flex items-center justify-center relative mb-8 pt-8 md:mb-0">
         <div className="absolute w-full h-full blur-2xl rounded-full z-0 animate-pulse"></div>
         <Image
           src={donum_logo}
@@ -68,10 +69,7 @@ export const Hero = ({
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-6 text-left">
                   <TextGenerateEffect words={words} />
                 </h1>
-                <p className="text-lg text-gray-300 mb-8 text-left">
-                  Transform your jewelry designs into reality with our
-                  cutting-edge 3D printing technology.
-                </p>
+                
               </div>
             </motion.div>
           ) : (

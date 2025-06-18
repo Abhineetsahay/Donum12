@@ -24,9 +24,7 @@ const ContactUs = () => {
   } = useForm<ContactUsData>();
 
   const validateEmailOrPhone = (value: string) => {
-    // Email regex pattern
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Phone regex pattern (allows formats like: +1234567890, 1234567890, 123-456-7890)
     const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
     if (!value) return "Email or phone number is required";
@@ -107,7 +105,7 @@ const ContactUs = () => {
               className="mt-2 bg-indigo-600 hover:bg-indigo-700"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Review"}
+              {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </div>

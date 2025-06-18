@@ -16,7 +16,7 @@ const FaqAccordian = [
   {
     id: 2,
     question: "What payment methods do you accept? And what is the estimated cost?",
-    answer: "We accept payments via UPI, credit/debit cards, and bank transfers...",
+    answer: "We accept payments via UPI, credit/debit cards, and bank transfers. Pricing varies depending on the items ordered and the chosen delivery timeframe. We strive to maintain competitive and transparent pricing.",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const FaqAccordian = [
   {
     id: 4,
     question: "How long does shipping take?",
-    answer: "Shipping typically occurs within 1 business day of product completion...",
+    answer: "Shipping typically occurs within 1 business day of product completion. Expedited shipping options are available at an additional cost.",
   },
 ];
 
