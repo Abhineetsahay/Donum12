@@ -60,7 +60,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
       <motion.li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-30"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -111,12 +111,12 @@ const Slide = ({ slide, index, current }: SlideProps) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <h2 className="text-2xl font-bold mb-2">{title}</h2>
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 ">{title}</h2>
               <div className="mb-6 break-words whitespace-pre-line flex flex-col gap-1.5">
-                <span className="text-[20px] font-bold">Description:-</span>
-                {description}
+                <span className="text-base sm:text-lg md:text-xl font-bold">Description:-</span>
+                <span className="text-xs sm:text-sm md:text-base">{description}</span>
               </div>
-              <p className="text-lg font-semibold">Price: ₹{price}</p>
+              <p className="text-base sm:text-lg md:text-xl font-semibold">Price: ₹{price}</p>
             </motion.div>
             <button
               className="mt-auto self-end px-4 py-2 bg-white text-black rounded-lg"
@@ -127,8 +127,8 @@ const Slide = ({ slide, index, current }: SlideProps) => {
           </article>
         ) : (
           <div className="absolute bottom-4 right-4 flex flex-col items-end gap-2 z-10">
-            <h2 className="text-xl font-bold">{title}</h2>
-            <p className="text-lg">₹{price}</p>
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-right">{title}</h2>
+            <p className="text-sm sm:text-base md:text-lg">₹{price}</p>
             <button
               className="px-4 py-2 bg-white text-black text-sm rounded-xl shadow hover:shadow-md transition"
               onClick={(e) => {
@@ -216,7 +216,7 @@ export function Carousel({ slides, initialIndex = 0 }: CarouselProps) {
   return (
     <div
       ref={carouselRef}
-      className="relative min-w-full h-11/12 flex z-[99999999999999999999] items-center pt-14 pl-8 overflow-x-auto scrollbar-hide"
+      className="relative min-w-full h-11/12 flex z-40 items-center pt-14 pl-8 overflow-x-auto scrollbar-hide"
       aria-labelledby={`carousel-heading-${id}`}
       onWheel={handleWheel}
     >
