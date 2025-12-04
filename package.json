@@ -15,7 +15,7 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@tabler/icons-react": "^3.31.0",
     "class-variance-authority": "^0.7.1",
-    "cloudinary": "^2.6.0",
+    "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "firebase": "^11.6.1",
     "keen-slider": "^6.8.6",
