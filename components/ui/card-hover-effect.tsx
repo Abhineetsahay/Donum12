@@ -80,9 +80,9 @@ export const HoverEffect = ({
             </div>
             <div className="h-full flex flex-col justify-center">
               <CardTitle>{item.name}</CardTitle>
-              <p className="mt-2 text-lg font-semibold text-slate-200">
-                ₹{item.price}
-              </p>
+              {/* {<p className="mt-2 text-lg font-semibold text-slate-200">
+                //₹{item.price}
+              </p>} */}
               <motion.div
                 layout
                 initial={{ opacity: 0.8 }}

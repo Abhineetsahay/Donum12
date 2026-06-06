@@ -54,7 +54,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
     yRef.current = 0;
   };
 
-  const { src, button, title, description, price } = slide;
+  const { src, button, title, description } = slide;
 
   return (
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
@@ -116,7 +116,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
                 <span className="text-base sm:text-lg md:text-xl font-bold">Description:-</span>
                 <span className="text-xs sm:text-sm md:text-base">{description}</span>
               </div>
-              <p className="text-base sm:text-lg md:text-xl font-semibold">Price: ₹{price}</p>
+              {/* <p className="text-base sm:text-lg md:text-xl font-semibold">Price: ₹{price}</p> */}
             </motion.div>
             <button
               className="mt-auto self-end px-4 py-2 bg-white text-black rounded-lg"
@@ -128,7 +128,7 @@ const Slide = ({ slide, index, current }: SlideProps) => {
         ) : (
           <div className="absolute bottom-4 right-4 flex flex-col items-end gap-2 z-10">
             <h2 className="text-base sm:text-lg md:text-xl font-bold text-right">{title}</h2>
-            <p className="text-sm sm:text-base md:text-lg">₹{price}</p>
+            {/* <p className="text-sm sm:text-base md:text-lg">₹{price}</p> */}
             <button
               className="px-4 py-2 bg-white text-black text-sm rounded-xl shadow hover:shadow-md transition"
               onClick={(e) => {
