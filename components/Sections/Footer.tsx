@@ -52,7 +52,7 @@ export const Footer = ({
           </p>
           <div className="flex gap-4 mt-4">
             <Link
-              href="https://www.instagram.com/_.donum/"
+              href="https://www.instagram.com"
               className="hover:text-blue-300 hover:cursor-pointer"
               aria-label="Instagram"
               target="_blank"
