@@ -239,7 +239,7 @@ export const MobileNavToggle = ({
 export const NavbarLogo = () => {
   return (
     <Link
-      href="https://www.instagram.com/_.donum/"
+      href="https://www.instagram.com"
       target="_blank"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
